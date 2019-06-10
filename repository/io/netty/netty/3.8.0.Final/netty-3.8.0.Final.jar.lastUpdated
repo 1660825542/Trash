@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri May 17 11:37:31 CST 2019
+http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact io.netty\:netty\:jar\:3.8.0.Final from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: GET request of\: io/netty/netty/3.8.0.Final/netty-3.8.0.Final.jar from nexus-aliyun failed
+@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1558064251455

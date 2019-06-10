@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Log">
+
+	<resultMap id="LogResultMap" type="com.icss.oa.possession.pojo.Log">
+		<id column="LOG_ID" property="logId" />
+		<result column="EMP_ID" property="empId"  />
+		<result column="BORROW_DATE" property="borDate"  />
+		<result column="BORROW_NUM" property="borNum"  />
+		<result column="BORROW_DESCRIPTION" property="borDes"  />
+		<result column="POSS_ID" property="possId"  />
+		<result column="EMP_NAME" property="empName"  />
+		<result column="POSS_CATEGORY" property="possCate"  />
+		<result column="POSS_NAME" property="possName"  />
+		<result column="POSS_USED" property="possUse"  />
+		<result column="POSS_UNUSED" property="possUnuse"  />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.icss.oa.possession.pojo.Log">
+		insert into POSSESSION_LOG (LOG_ID,
+		EMP_ID,BORROW_DATE,BORROW_NUM,BORROW_DESCRIPTION,POSS_ID
+		)
+		values (poss_log_seq.nextval,
+	     #{empId},#{borDate},#{borNum},
+		#{borDes},#{possId}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.icss.oa.possession.pojo.Poss">
+		update POSSESSION
+		set POSS_NAME =#{possName},
+		    POSS_CATEGORY =#{possCate},
+		    POSS_TYPE =#{possType},
+		    POSS_PRICE =#{possPrice},
+		    POSS_UNUSED = #{possUse},
+		    POSS_USED = #{possUse},
+ 		    where POSS_ID = #{possId},
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from POSSESSION
+		where POSS_ID
+		= #{possId}
+	</delete>
+
+	<select id="queryById" resultMap="LogResultMap" parameterType="java.lang.Integer">
+		select *
+		from POSSESSION
+		where POSS_ID = #{possId}
+	</select>
+
+	<select id="query" resultMap="LogResultMap">
+		select * from (select rownum
+		rnum,d.* from log d) where rnum between #{start} and #{end}
+		
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from POSSESSION
+	</select>
+	
+	<select id="findBylogId" resultMap="LogResultMap" parameterType="java.lang.Integer">
+	    
+	    select *
+		from POSSESSION_LOG
+		where POSS_ID = #{possId}
+	</select>
+	<!-- 查询全部-->
+	<select id="queryAll" parameterType="java.util.Map"
+		resultMap="LogResultMap">   
+		select EMP_ID,BORROW_DATE,BORROW_NUM,BORROW_DESCRIPTION,POSS_ID,POSS_NAME,
+		POSS_CATEGORY,EMP_NAME
+		from (select rownum rnum,s.* from (select * from POSSESSION_LOG natural join POSSESSION natural join EMPLOYEE order by BORROW_DATE asc) s)
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <fieldset>
+        <legend>1、登录</legend>
+            <!--
+                action:表单提交的目的地
+                method：设置表单提交的方法（方式）
+                name：表单标记名
+            -->
+            <form action="T1" method="get" name="loginForm">
+                <!--
+                input：输入元素
+                type：指定输入元素的类型  text--文本框
+                -->
+                <div>
+                    登录ＩＤ：<input type="text" >
+                </div>
+                <div>
+                    登录密码：<input type="password">
+                </div>
+                <div>
+                    <!--提交按钮：单击这个提交按钮后，浏览器会将这个表单提交给action属性值-->
+                    <input type="submit" value="【 登 录 】">
+                </div>
+            </form>
+    </fieldset>
+
+    <fieldset>
+        <legend>2、注册</legend>
+            <!--
+                action:表单提交的目的地
+                method：设置表单提交的方法（方式）
+                name：表单标记名
+            -->
+            <form action="01-hello.html" method="get" name="registerForm">
+                <div>
+                    登录ＩＤ：<input type="text" name="userid">
+                </div>
+                <div>
+                    用户电话：<input type="text" name="mobile">
+                </div>
+                <div>
+                    登录密码：<input type="password" name="pwd">
+                </div>
+                <div>
+                    用户性别：
+                    <input type="radio" value="M" name="sex">男
+                    <input type="radio" value="F" name="sex">女
+                </div>
+                <div>
+                    个人喜好：
+                    <input type="checkbox" value="lq"   name="hobby">篮球
+                    <input type="checkbox" value="乒乓"  name="hobby">乒乓球
+                    <input type="checkbox" value="苹果"  name="hobby">吃苹果
+                    <input type="checkbox" value="dxq"  name="hobby">大小球
+                </div>
+                <div>
+                    各个喜好的手机：
+                    <input type="checkbox" value="华为"  name="phone">华为
+                    <input type="checkbox" value="小米"  name="phone">小米
+                    <input type="checkbox" value="苹果"  name="phone">苹果
+                </div>
+                <div>
+                    <!--提交按钮：单击这个提交按钮后，浏览器会将这个表单提交给action属性值-->
+                    <input type="submit" value="【 注 册 】">
+                </div>
+            </form>
+    </fieldset>
+</body>
+</html>

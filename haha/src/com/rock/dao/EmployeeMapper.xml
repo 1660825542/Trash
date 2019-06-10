@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rock.dao.EmployeeDao">
+	<!-- 
+		id:和dao中的方法名一致（注意大小写）
+		parameterType：指定了dao接口中对应方法的参数类型（全类名）
+		resultType：方法的返回值类型(全类名)
+		Rock4.0.            Employee emp=util.queryById(Employee.class,"select * from emp where empno=?",empno);
+	 -->
+	<select id="queryByID" parameterType="java.lang.String" resultType="com.rock.pojo.Employee">
+		select *
+		from emp
+		where empno=#{empno}
+	</select>
+	<select id="queryByIDWithEmployee" parameterType="Employee"  resultType="Employee">
+		select *
+		from emp
+		where empno=#{empno}
+	</select>
+	<!-- 
+		<typeAlias type="com.rock.pojo.Employee"  alias="Employee"/> 
+		parameterType：全類名，但是一般都和mybatis配置文件中定義的別名一致，一般來講這個別名都是和類名一致
+	-->
+	<insert id="insertEmployee" parameterType="Employee">
+		insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) 
+		values(#{empno},#{ename},#{job},#{mgr},#{hiredate,jdbcType=DATE},#{sal},#{comm},#{deptno})
+	</insert>
+	
+	<delete id="deleteByid" parameterType="String">
+		delete from emp
+		where empno=#{empno}
+	</delete>
+	
+	<update id="updateEmployee" parameterType="Employee">
+		update emp 
+		set sal=#{sal},comm=#{comm}
+		where empno=#{empno}
+	</update>
+	
+	
+	<resultMap type="Employee" id="employeeBaseColumn">
+		<id column="empno" property="empno"/>
+		<result column="ename" property="ename"/>
+		<result column="job" property="job"/>
+		<result column="deptno" property="deptno"/>
+	</resultMap>
+	<sql id="testColumnList">
+		empno,
+		ename,
+		job,
+		hiredate, 
+		sal,
+		comm,
+		deptno
+	</sql>
+	<!-- 根据岗位名称和姓名完成多条件检索
+		#{}:欲处理sql文，即?号占位符
+		${}:字符串拼接方式创建的sql文
+	 -->
+	
+	<select id="queryByLike" resultMap="employeeBaseColumn" parameterType="Employee">
+		select <include refid="testColumnList"/> from emp where 1=1 
+		<if test="job!=null">
+			and job=#{job}  
+		</if>
+		<if test="ename!=null">
+			and ename like '%${ename}%'
+		</if>
+	</select>
+	
+	<select id="queryByMulti" resultMap="employeeBaseColumn">
+		select <include refid="testColumnList"/>  from emp where 1=1
+		<choose>
+			<when test="job!=null">
+				and job=#{job}
+			</when>
+			<when test="deptno!=null">
+				and deptno=#{deptno}
+			</when>
+			<otherwise>
+				and comm  is not null
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- where元素：在条件没有的情况下，mybatis不会为sql文添加where子句，只有有条件情况下，才会为sql文添加where子句 -->
+	<select id="queryByWhere4Deptno" resultMap="employeeBaseColumn" parameterType="Employee">
+		select <include refid="testColumnList"/> from emp
+		<where>
+			<if test="deptno!=null">
+				deptno=#{deptno}
+			</if>
+		</where>
+	</select>
+</mapper>

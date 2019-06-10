@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #a{
+            background-color: #A7C942;
+        }
+        #b{
+            background-color: #FF00DD;
+        }
+    </style>
+    <script type="text/javascript">
+        var x=1;
+        /**
+         * 完成图片的轮换
+         */
+        function changeImg() {
+            var imgObj=document.getElementById("img");
+            x++;
+            imgObj.src="../huang/a"+(x%4+1)+".jpg";
+            document.getElementById("tar").href="a"+(x%4+1)+".html";
+        }
+        window.setInterval("changeImg();",2000);
+    </script>
+</head>
+<body>
+    <a href="" id="tar">
+        <img src="../huang/a1.jpg" id="img"/>
+    </a>
+    <hr/>
+    <div id="a">
+        我是div的值
+        <p id="b">我是p元素的值</p>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("a").onclick=function () {
+            alert("单击了div元素");
+        }
+        document.getElementById("b").onclick=function (ev) {
+            alert("单击了p元素");
+            // 可以阻止事件的冒泡
+            ev.stopPropagation();
+            // return false;
+        }
+    </script>
+</body>
+</html>

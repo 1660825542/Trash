@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    
+    <!-- 类别名 -->
+    <typeAliases>        
+        <typeAlias type="com.icss.oa.system.pojo.Department" alias="Department"/>
+        <typeAlias type="com.icss.oa.system.pojo.Position" alias="Position"/>
+        <typeAlias type="com.icss.oa.system.pojo.Permission" alias="Permission"/>
+        <typeAlias type="com.icss.oa.system.pojo.Role" alias="Role"/>
+        <typeAlias type="com.icss.oa.system.pojo.Employee" alias="Employee"/>
+        <typeAlias type="com.icss.oa.work.pojo.Task" alias="Task"/>
+	    <typeAlias type="com.icss.oa.work.pojo.TaskList" alias="TaskList"/>	
+	    <typeAlias type="com.icss.oa.work.pojo.Agent" alias="Agent"/>
+	    <typeAlias type="com.icss.oa.message.pojo.Message" alias="Message"/>
+	    <typeAlias type="com.icss.oa.meeting.pojo.Meeting" alias="Meeting"/>
+        <typeAlias type="com.icss.oa.room.pojo.Room" alias="Room"/>
+        <typeAlias type="com.icss.oa.emp_meeting.pojo.EmpMeeting" alias="EmpMeeting"/>
+        <typeAlias type="com.icss.oa.record.pojo.Record" alias="Record"/>
+        <typeAlias type="com.icss.oa.card.pojo.Card" alias="Card"/>
+        <typeAlias type="com.icss.oa.card.pojo.CardCategory" alias="CardCategory"/>
+        <typeAlias type="com.icss.oa.assign.pojo.AssignEmp" alias="AssignEmp"/>
+        <typeAlias type="com.icss.oa.assign.pojo.AssignCom" alias="AssignCom"/>
+        <typeAlias type="com.icss.oa.assign.pojo.ComReq" alias="ComReq"/>
+        <typeAlias type="com.icss.oa.assign.pojo.EmpCom" alias="EmpCom"/>    
+        <typeAlias type="com.icss.oa.notice.pojo.Notice" alias="Notice"/>
+        <typeAlias type="com.icss.oa.car.pojo.Car" alias="Car"/>      
+        <typeAlias type="com.icss.oa.carapply.pojo.CarApply" alias="CarApply"/>
+        <typeAlias type="com.icss.oa.carapply.pojo.CarFlowLog" alias="CarFlowLog"/>
+        <typeAlias type="com.icss.oa.carapply.pojo.CarUserTask" alias="CarUserTask"/>
+        <typeAlias type="com.icss.oa.carapply.pojo.CarRecord" alias="CarRecord"/>
+    </typeAliases>
+	
+	<!--映射文件路径，可能会有多个mapper映射 -->
+	<mappers>	    
+		<mapper resource="com/icss/oa/system/pojo/DepartmentMapper.xml"/>
+		<mapper resource="com/icss/oa/system/pojo/PositionMapper.xml"/>	
+		<mapper resource="com/icss/oa/system/pojo/PermissionMapper.xml"/>	
+		<mapper resource="com/icss/oa/system/pojo/RoleMapper.xml"/>	
+		<mapper resource="com/icss/oa/system/pojo/EmployeeMapper.xml"/>	
+		<mapper resource="com/icss/oa/folder/pojo/FolderMapper.xml"/>	
+		<mapper resource="com/icss/oa/folder/pojo/FilesMapper.xml"/>	
+		<mapper resource="com/icss/oa/process/pojo/LeaveMapper.xml"/>	
+		<mapper resource="com/icss/oa/process/pojo/LeaveFlowLogMapper.xml"/>	
+		<mapper resource="com/icss/oa/process/pojo/LeaveUserTaskMapper.xml" />
+		<mapper resource="com/icss/oa/process/pojo/ReimbursementMapper.xml"/>	
+		<mapper resource="com/icss/oa/process/pojo/ReimFlowLogMapper.xml"/>	
+		<mapper resource="com/icss/oa/process/pojo/ReimUserTaskMapper.xml" />
+		<mapper resource="com/icss/oa/work/pojo/TaskMapper.xml"/>		
+		<mapper resource="com/icss/oa/work/pojo/TaskListMapper.xml"/>
+		<mapper resource="com/icss/oa/work/pojo/AgentMapper.xml"/>
+		<mapper resource="com/icss/oa/message/pojo/MessageMapper.xml"/>	
+		<mapper resource="com/icss/oa/room/pojo/RoomMapper.xml"/>		
+		<mapper resource="com/icss/oa/meeting/pojo/MeetingMapper.xml"/>	
+		<mapper resource="com/icss/oa/emp_meeting/pojo/EmpMeetingMapper.xml"/>
+		<mapper resource="com/icss/oa/record/pojo/RecordMapper.xml"/>
+		<mapper resource="com/icss/oa/card/pojo/CardMapper.xml"/>	
+		<mapper resource="com/icss/oa/card/pojo/CardCategoryMapper.xml"/>
+		<mapper resource="com/icss/oa/assign/pojo/AssignEmpMapper.xml"/>
+		<mapper resource="com/icss/oa/assign/pojo/AssignComMapper.xml"/>
+		<mapper resource="com/icss/oa/assign/pojo/ComReqMapper.xml"/>
+		<mapper resource="com/icss/oa/assign/pojo/EmpComMapper.xml"/>		
+		<mapper resource="com/icss/oa/notice/pojo/NoticeMapper.xml"/>
+		<mapper resource="com/icss/oa/car/pojo/CarMapper.xml"/>		
+		<mapper resource="com/icss/oa/carapply/pojo/CarApplyMapper.xml"/>
+		<mapper resource="com/icss/oa/carapply/pojo/CarFlowLogMapper.xml"/>		
+		<mapper resource="com/icss/oa/carapply/pojo/CarUserTaskMapper.xml"/>
+		<mapper resource="com/icss/oa/carapply/pojo/CarRecordMapper.xml"/>
+		<mapper resource="com/icss/oa/app/pojo/Help.xml" />
+		<mapper resource="com/icss/oa/possession/pojo/PossMapper.xml"/>	
+		<mapper resource="com/icss/oa/possession/pojo/LogMapper.xml"/>	
+		<mapper resource="com/icss/oa/possession/pojo/HouseMapper.xml"/>	
+	</mappers>
+	
+</configuration>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p id="div1">div1元素的值111111</p>
+    <span id="div2">div2元素的值</span>
+    
+    <div class="c">div1元素的值111111</div>
+    <div class="c" name="n">div2元素的值222222</div>
+    <div  name="n">div3元素的值333333</div>
+
+    <script type="text/javascript">
+        // 根据id属性值创建对应的dom对象
+        var dom=document.getElementById("div1");
+        var value=dom.innerText;
+        // alert(value);
+        dom.innerText="<b>dom</b>动态值1";//html元素不会被浏览器解析
+        document.getElementById("div2").innerHTML="<b>dom</b>动态值2";//html元素会被浏览器解析
+
+        // 如下doms是一个dom类型数组,根据元素名
+        var doms=document.getElementsByTagName("div");
+        for(var i=0;i<doms.length;i++){
+            // console.log();将信息打印到浏览器控制台窗口
+            console.log(doms[i].innerHTML);
+        }
+        console.log("--------------------------------");
+        // 根据类属性值
+        var doms= document.getElementsByClassName("c");
+        for(var i=0;i<doms.length;i++){
+            // console.log();将信息打印到浏览器控制台窗口
+            console.log(doms[i].innerHTML);
+        }
+
+        console.log("================================");
+        var doms= document.getElementsByName("n")
+        for(var i=0;i<doms.length;i++){
+            // console.log();将信息打印到浏览器控制台窗口
+            console.log(doms[i].innerHTML);
+        }
+    </script>
+</body>
+</html>

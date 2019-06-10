@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri May 17 11:37:31 CST 2019
+http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact org.roaringbitmap\:RoaringBitmap\:jar\:0.5.11 from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: GET request of\: org/roaringbitmap/RoaringBitmap/0.5.11/RoaringBitmap-0.5.11.jar from nexus-aliyun failed
+@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1558064251209

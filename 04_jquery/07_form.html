@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        #customers
+        {
+            font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        #customers td, #customers th
+        {
+            font-size:1em;
+            border:1px solid #98bf21;
+            padding:3px 7px 2px 7px;
+        }
+
+        #customers th
+        {
+            font-size:1.1em;
+            text-align:left;
+            padding-top:5px;
+            padding-bottom:4px;
+            background-color:#A7C942;
+            color:#ffffff;
+        }
+
+        #customers tr.alt td
+        {
+            color:#000000;
+            background-color:#EAF2D3;
+        }
+    </style>
+
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript"> 
+        $(function () {
+            $('#registerForm').submit(function () {
+                var reg=/^[a-zA-Z0-9]{8,12}$/;
+                var userid=$('#userid').val();
+                if(!reg.test(userid)){
+                    $('#useridInfo').html("用户id数据不合法");
+                    return false;
+                }
+            });
+            $('#b1').click(function () {
+                // console.log($('input[type="radio"]:checked').val());
+                var cs=$('input[type="checkbox"]:checked');
+                for(var i=0;i<cs.length;i++){
+                    var c=cs[i];//c是被选中的复选框对应的jquery对象
+                    // dom对象转化成jquery对象   $(domObj);
+                    console.log($(c).val());
+                }
+                // console.log($(this).attr('id'));
+                // 将jquery对象转化成dom对象，通过get(0);
+                var domObj=$('button').get(0);
+                console.log(domObj.getAttribute("id"));
+            });
+            $('#chall').click(function () {
+
+
+                var flag=$(this).prop('checked');
+                console.log(flag);
+                /*
+                    prop:设置单一属性的值        checked="checked"
+                    attr：设置非单一属性的值      name="avb sddfasfas"
+
+                    下拉列表框下有selected,复选框的checked属性，radio的checked属性都必须使用prop方法操作
+                */
+                // if(flag){
+                //     //设置所有复选框选中
+                //     $('input[type="checkbox"]').prop('checked','checked');
+                // }
+                // else{
+                //     //设置所有复选框不选中
+                //     $('input[type="checkbox"]').prop('checked',false);
+
+                // }
+/*
+                用回调方法的返回值设置复选框的选中与否，
+                若回调方法返回值是true，当前复选框要选中
+                若回调方法返回值是false，当前复选框不选中
+
+                i:当前复选框的索引下标值。。。。。若选择器匹配了10个复选框（0-9）
+                v:当前复选框的checked的值，若没有选中，v是false，若是选中状态，v是true
+*/
+
+                $('input[type="checkbox"]').prop('checked',function (i,v) {
+                    console.log(i+"  "+v);
+                    return false;
+                });
+            });
+            $('#bx').click(function () {
+                $('input[type="checkbox"]').prop('checked',function (i,v) {
+                    console.log(i+" : "+v);
+                    return !v;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<fieldset>
+    <legend>1、欢迎登录</legend>
+    <!--method:get|post   &#45;&#45;   默认是get方式-->
+    <form action="T1">
+        <div>
+            登录ＩＤ:<input type="text" name="userid"/>
+        </div>
+        <div>
+            登录密码:<input type="password" name="password"/>
+        </div>
+        <div>
+            <input type="submit" value="【 登 录 】"/>
+            <input type="reset" value="【 重 置 】"/>
+        </div>
+    </form>
+</fieldset>
+<fieldset>
+    <legend>2、欢迎注册</legend>
+    <!--method:get|post   &#45;&#45;   默认是get方式-->
+    <form action="T2" id="registerForm">
+        <div>
+            登录ＩＤ:<input type="text" name="userid" id="userid"/>
+            <span id="useridInfo"></span>
+        </div>
+        <div>
+            登录密码:<input type="password" name="password" id="password"/>
+        </div>
+        <div>
+            确认密码:<input type="password" name="repwd" id="repassword"/>
+        </div>
+        <div>
+            用户性别:
+            <input type="radio" name="sex" value="女" checked="checked"/>女
+            <input type="radio" name="sex" value="男"/>男
+        </div>
+        <div>
+            个人爱好:
+            <!--<input type="checkbox" name="hobby" value="体育" checked="checked"/>体育-->
+            <!--<input type="checkbox" name="hobby" value="音乐"/>音乐-->
+            <!--<input type="checkbox" name="hobby" value="旅游"/>旅游-->
+            <!--<input type="checkbox" name="hobby" value="看书" checked="checked"/>看书-->
+        </div>
+        <div>
+            用户学历:
+            <!--下拉列表框：select，option是选项，option有一个selected属性，设置默认选中项-->
+            <select name="degree">
+                <option value="博士">博士</option>
+                <option value="硕士">硕士</option>
+                <option value="xueshi" selected="selected">学士</option>
+                <option value="other">其他</option>
+            </select>
+        </div>
+        <div>
+            <!--文件选择框-->
+            我的照片：<input type="file" name="picture">
+        </div>
+        <div>
+            个人备注：
+            <!--文本区-->
+            <textarea cols="60" rows="5" name="dis"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="【 注 册 】"/>
+            <input type="reset" value="【 重 置 】"/>
+            <button id="b1" value="abcdef">【 查 看 】</button>
+        </div>
+        <div>
+            <input type="button" value="button">
+            <button>我是button，可以承担submit功能呢吗？</button>
+        </div>
+    </form>
+</fieldset>
+<fieldset>
+    <legend>漂亮表格</legend>
+    <button id="bx">反选</button>
+    <table id="customers">
+        <tr>
+            <th>
+                <input type="checkbox" id="chall" value="ch111111">
+                <a href="#">删除</a>
+            </th>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Country</th>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="checkbox" id="ch1" value="ch111111">
+            </td>
+            <td>Apple</td>
+            <td>Steven Jobs</td>
+            <td>USA</td>
+        </tr>
+
+        <tr class="alt">
+            <td>
+                <input type="checkbox" id="ch2" value="ch111111">
+            </td>
+            <td>Baidu</td>
+            <td>Li YanHong</td>
+            <td>China</td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="checkbox" id="ch3" value="ch111111">
+            </td>
+            <td>Google</td>
+            <td>Larry Page</td>
+            <td>USA</td>
+        </tr>
+
+        <tr class="alt">
+            <td>
+                <input type="checkbox" id="ch4" value="ch111111">
+            </td>
+            <td>Lenovo</td>
+            <td>Liu Chuanzhi</td>
+            <td>China</td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="checkbox" id="ch5" value="ch111111">
+            </td>
+            <td>Microsoft</td>
+            <td>Bill Gates</td>
+            <td>USA</td>
+        </tr>
+
+        <tr class="alt">
+            <td>
+                <input type="checkbox" id="ch6" value="ch111111">
+            </td>
+            <td>Nokia</td>
+            <td>Stephen Elop</td>
+            <td>Finland</td>
+        </tr>
+    </table>
+</fieldset>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function myFocus() {
+            alert("获取了焦点");
+        }
+        function myBlur(){
+            alert("失去焦点事件");
+        }
+        function myChange() {
+            console.log("下拉列表框改变了");
+        }
+        function mySubmit() {
+            console.log("开始提交表单了");
+            alert("开始提交表单了");
+        }
+    </script>
+</head>
+<body>
+<fieldset>
+    <legend>2、欢迎注册</legend>
+    <!--method:get|post   &#45;&#45;   默认是get方式-->
+    <form action="T2" onsubmit="mySubmit();">
+        <div>
+            登录ＩＤ:<input type="text" name="userid" onblur="myBlur();"/>
+        </div>
+        <div>
+            登录密码:<input type="password" name="password" onfocus="myFocus();"/>
+        </div>
+        <div>
+            确认密码:<input type="password" name="repwd"/>
+        </div>
+        <div>
+            用户性别:
+            <input type="radio" name="sex" value="女" checked="checked"/>女
+            <input type="radio" name="sex" value="男"/>男
+        </div>
+        <div>
+            个人爱好:
+            <input type="checkbox" name="hobby" value="体育" checked="checked"/>体育
+            <input type="checkbox" name="hobby" value="音乐"/>音乐
+            <input type="checkbox" name="hobby" value="旅游"/>旅游
+            <input type="checkbox" name="hobby" value="看书" checked="checked"/>看书
+        </div>
+        <div>
+            用户学历:
+            <!--下拉列表框：select，option是选项，option有一个selected属性，设置默认选中项-->
+            <select name="degree" onchange="myChange();">
+                <option value="博士">博士</option>
+                <option value="硕士">硕士</option>
+                <option value="xueshi" selected="selected">学士</option>
+                <option value="other">其他</option>
+            </select>
+        </div>
+        <div>
+            <!--文件选择框-->
+            我的照片：<input type="file" name="picture">
+        </div>
+        <div>
+            个人备注：
+            <!--文本区-->
+            <textarea cols="60" rows="5" name="dis"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="【 注 册 】"/>
+            <input type="reset" value="【 重 置 】"/>
+        </div>
+        <div>
+            <input type="button" value="button">
+            <button>我是button，可以承担submit功能呢吗？</button>
+        </div>
+    </form>
+</fieldset>
+</body>
+</html>

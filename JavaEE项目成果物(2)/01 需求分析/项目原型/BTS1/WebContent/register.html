@@ -1,0 +1,163 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BTS网 | 会员中心 &gt; 会员注册</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>	
+	<script type="text/javascript" src="js/jquery.lazyload.min.js"></script>
+
+	<script type="text/javascript" src="js/jquery.showDialog.js"></script>
+	<link href="css/showDialog.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="js/app.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">app.uri='';app.root='//www.haohua.com';</script>
+	<script type="text/javascript">
+	$(function(){
+		$('.topper a.login').remove();
+	});
+	</script>
+</head>
+<body>
+
+		<div class="topper">
+		<div class="wrap">
+			<div class="left">
+				<a onclick="app.tools.addFavorite();" href="javascript:;" title="收藏BTS网 (haohua.com)">收藏BTS网 (BTSgifts.com)</a>
+				<a href="javascript:;">
+					关注微信
+					<div class="topperpop">
+						<div class="fqrcode">
+							<p class="note">回复“礼物”有惊喜！" 活动多多，在BTS遇见幸福</p>
+							<p class="img"><img src="img/qrcode.png" width="128" height="130" /></p>
+							<p class="gzh">公众号</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="right">
+				<a class="iconbounce login" href="#" title="登录 / 注册"><i class="icon icon-login"></i>登录 / 注册</a>
+				<a class="iconbounce" href="service.jsp" onclick="openChat();" title="联系客服"><i class="icon icon-service"></i>联系客服</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="header2brt">
+		<div class="wrap header ">
+			<div class="logobanner clearfix">
+				<div class="logo">
+					<a href="//www.haohua.com/" title="【BTS网】专注鲜花电商，只做品质鲜花！"><img src="img/logo.png" width="248" height="41" alt="BTS网" /></a>
+				</div>
+				<div class="search">
+					<form action="//www.haohua.com/s.html" method="get" name="search">
+						<input type="hidden" name="o" value="0" />
+						<div class="search-frame">
+							<input type="text" class="q" name="q" placeholder="请输入关键词搜索" autocomplete="off" value="" />
+							<button type="submit" class="s" onclick="if($('.q').val()=='') return false;"><i class="icon icon-search"></i></button>
+						</div>
+					</form>
+					<div class="search-item">
+						<span>热搜：</span>
+						<a href="/xianhua/" class="active" title="红玫瑰">红玫瑰</a>
+						<a href="/ysh/" title="永生花">永生花</a>
+						<a href="/xianhua/sr/" title="生日鲜花">生日鲜花</a>
+						<a href="/xianhua/knx/" title="康乃馨">康乃馨</a>
+						<a href="/mzyh/" title="每周一花">每周一花</a>
+					</div>
+				</div>
+				<div class="tele400 clearfix">
+					<div class="left">
+						<i class="icon icon-tel"></i>
+					</div>
+					<div class="left">
+						<label>400-888-9411</label>
+						<p>咨询热线</p>
+					</div>
+				</div>
+				<a class="service iconbounce" href="javascript:;" onclick="openChat();"><i class="icon icon-service2"></i>在线客服</a>
+			</div>
+			<div class="main-nav clearfix">
+				<dl>
+					<dt >
+						<div class="dt"><a href="/xianhua/">全部商品导航</a></div>
+						
+					</dt>
+					<dd><a href="/">首页</a></dd>
+					<dd><a href="/xianhua/" target="_blank">鲜花</a></dd>
+					<dd><a href="/xianhua/hualan/" target="_blank">花篮</a></dd>
+					<dd><a href="/ysh/" target="_blank">永生花</a></dd>
+					<dd><a href="/lipin/" target="_blank">礼品</a></dd>
+					<dd><a href="/mzyh/" target="_blank">每周一花</a></dd>
+					<dd><a href="/huayu/" target="_blank">花语</a></dd>
+					<dd><a href="/why/" target="_blank">品牌保障</a></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+
+	<div class="full-login">
+		<div class="wrap pos-rel">
+			<div class="login-box-outer">
+				<div class="login-box">
+					<div class="box-bar">
+						<ul class="clearfix">
+							<li><a href="login.jsp">登录</a></li>
+							<li class="active"><a href="javascript:;">注册</a></li>
+						</ul>
+					</div>
+					<div class="loginfrm mt30 regfrm">
+						<form action="Register_Servlet" method="post">
+						<ul class="loginfrm-body">
+							<li>
+								<div class="loginfrm-group">
+									<input type="text" class="input-big"  name="phone" value="" placeholder="请输入手机号码" autocomplete="off" />
+								</div>
+							</li>
+							<li>
+								<div class="loginfrm-group">
+									<input type="password" class="input-big"  name="password" value="" placeholder="请设置登录密码" />
+								</div>
+							</li>
+							<li>
+								<div class="loginfrm-group">
+									<input type="name" class="input-big"  name="name" value="" placeholder="请输入姓名" />
+								</div>
+							</li>
+							<li>
+								<div class="loginfrm-group">
+									<input type="address" class="input-big"  name="address" value="" placeholder="请输入送花地址" />
+								</div>
+							</li>
+							<li>
+								<div class="loginfrm-group">
+									<p class="loginfrm-loading"></p>
+									<input  class="button-big button-block mobile-submit" type="submit" value="立即注册"/ >
+								</div>
+							</li>
+						</ul>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="wrap tc">
+		<img src="//www.haohua.com/theme/haohua.com/default/static/img/sbj.jpg" width="1069" height="116" />
+		<div class="fcopyright">
+			<p class="note">网站声明：本站由软件16-1班 王浩 赵雨 共同完成</p>
+		</div>
+		<div class="h30"></div>
+    </div>
+
+</body>
+</html>

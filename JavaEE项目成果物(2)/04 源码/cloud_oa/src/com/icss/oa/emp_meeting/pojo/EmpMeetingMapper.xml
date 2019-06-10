@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EMP_MEETING" >
+  <resultMap id="BaseResultMap" type="EmpMeeting" >
+
+    <id column="EM_ID" property="emId" jdbcType="DECIMAL" />
+    <result column="EMP_ID" property="empId" jdbcType="DECIMAL" />
+    <result column="MEET_ID" property="meetId" jdbcType="DECIMAL" />
+  </resultMap>
+ 
+  	<insert id="insert" parameterType="EmpMeeting">
+		insert into EMP_MEETING (EM_ID,EMP_ID,MEET_ID)
+		values (em_seq.nextval,
+		#{empId,jdbcType=DECIMAL},
+		#{meetId,jdbcType=DECIMAL})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from EMP_MEETING
+		where
+		MEET_ID = #{meetId,jdbcType=DECIMAL}
+	</delete>
+	
+	<select id="queryByMeetId"  resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select emp_id from emp_meeting
+		where
+		meet_id=#{meetId,jdbcType=DECIMAL}
+	</select>
+</mapper>

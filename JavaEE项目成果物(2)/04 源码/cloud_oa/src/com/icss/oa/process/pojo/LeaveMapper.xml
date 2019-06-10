@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LEAVE">
+  <resultMap id="BaseResultMap" type="com.icss.oa.process.pojo.Leave">
+    <id column="LEAVE_ID" jdbcType="DECIMAL" property="leaveId" />
+    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+    <result column="START_TIME" jdbcType="DATE" property="startTime" />
+    <result column="END_TIME" jdbcType="DATE" property="endTime" />
+    <result column="EMP_ID" jdbcType="DECIMAL" property="empId" />
+    <result column="REASON" jdbcType="VARCHAR" property="reason" />
+    <result column="LEADER_ID" jdbcType="DECIMAL" property="leaderId" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="ENDSTATUS" jdbcType="DECIMAL" property="endstatus" />
+    <result column="EMP_NAME" jdbcType="VARCHAR" property="empName" />
+    <result column="LEADER_NAME" jdbcType="VARCHAR" property="leaderName" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.icss.oa.process.pojo.Leave">
+    insert into LEAVE (LEAVE_ID, TIME, START_TIME, 
+      END_TIME, EMP_ID, REASON, 
+      LEADER_ID, STATUS, ENDSTATUS, 
+      EMP_NAME, LEADER_NAME)
+    values (leave_seq.nextval, sysdate, #{startTime,jdbcType=DATE}, 
+      #{endTime,jdbcType=DATE}, #{empId,jdbcType=DECIMAL}, #{reason,jdbcType=VARCHAR}, 
+      #{leaderId,jdbcType=DECIMAL}, #{status,jdbcType=DECIMAL}, #{endstatus,jdbcType=DECIMAL}, 
+      #{empName,jdbcType=VARCHAR}, #{leaderName,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateStatus" parameterType="com.icss.oa.process.pojo.Leave">
+      UPDATE leave 
+      <set>
+          <if test="status!=null">
+              status=#{status},
+          </if>
+          <if test="endstatus!=null">
+              endstatus=#{endstatus}
+          </if>
+      </set>  
+      WHERE leave_id=${leaveId}
+  </update>
+  
+  <!-- 得到刚插入表的自动编号 -->
+  <select id="getLastId" resultType="java.lang.Integer">
+      SELECT leave_seq.currval from dual
+  </select>
+  
+  <!-- 返回 请假列表-->
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+     select * from  (select l.*, rownum rnum from (select * from leave order by time desc) l 
+      where l.emp_id = #{empId} 
+      ) where rnum between #{start} and #{end}
+  </select>
+  
+   <!-- 返回 请假单条请假记录-->
+  <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select * from leave where leave_id=#{leaveId}    
+  </select>
+  
+  <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      select count(*) from leave where emp_id = #{empId} 
+  </select>
+</mapper>

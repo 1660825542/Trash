@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="shili.Order_Goods" table="order_goods">
+		<id name="id" column="ID" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="number" type="int">
+			<column name="NUMBER" length="20" />
+		</property>
+		
+		
+		<many-to-one name="order" column="ORDER_ID"
+			class="shili.Order" cascade="all" lazy="false"></many-to-one>
+
+		<!-- <澶氬涓€></澶氬涓€> -->
+		<many-to-one name="goods" column="GOODS_ID"
+			class="shili.Goods" cascade="all" lazy="false"></many-to-one>
+
+
+	</class>
+
+
+</hibernate-mapping>

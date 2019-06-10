@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="POSITION" >
+  <resultMap id="BaseResultMap" type="Position" >
+    <id column="POS_ID" property="posId" jdbcType="DECIMAL" />
+    <result column="POS_NAME" property="posName" jdbcType="VARCHAR" />
+    <result column="POS_INFO" property="posInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="Position" >
+    insert into POSITION (POS_ID, POS_NAME, POS_INFO
+      )
+    values (pos_seq.nextval, #{posName,jdbcType=VARCHAR}, #{posInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from POSITION
+    where POS_ID = #{posId,jdbcType=DECIMAL}
+  </delete>
+  
+  <update id="update" parameterType="Position" >
+    update POSITION
+    set POS_NAME = #{posName,jdbcType=VARCHAR},
+      POS_INFO = #{posInfo,jdbcType=VARCHAR}
+    where POS_ID = #{posId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from POSITION
+    where POS_ID = #{posId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+      select *　from POSITION
+  </select>
+  
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+      	select * from (select rownum rnum,p.* from (select * from position order by pos_id) p)
+		where
+		rnum between #{start} and #{end}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer">
+	    select count(*) from position
+  </select>
+	
+  <select id="haveEmp" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	    select p.* from position p, employee e 
+	    where p.pos_id=e.position_id and p.pos_id=#{posId}
+  </select>
+  
+  	<!-- 获得主码 -->	
+	<select id="getPrimaryKey" resultType="java.lang.Integer">
+	    select pos_seq.currval from dual
+	</select>
+</mapper>

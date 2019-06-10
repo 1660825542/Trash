@@ -1,0 +1,9 @@
+-修改ServerContext.properties中参数
+-启动Hadoop集群
+-启动redis服务
+-通过hdfs命令创建目录/spamdetermination
+-通过hdfs命令上传SMSSpamCollection文件到/spamdetermination中
+-首次启动需要先执行SpamDeteminationMapReduce中main方法，进行一次MR，将学习的结果存入redis。
+-执行MainTest中isSpam来验证是否是垃圾消息
+-后期增加学习数据，使用MainTest.submitMsg方法提交，提交的数据先写入本地learningData中，
+ 如果该文件大小超过128M，自动上传到HDFS并进行MR

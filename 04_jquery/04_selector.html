@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        var province={
+            'p1':'辽宁省',
+            'p2':'吉林省',
+            'p3':'黑龙江省',
+            'p4':'北京市',
+            'p5':'上海市'
+        };
+        var citys=[{
+            'n':'辽宁省',
+            'cs':[{'cname':'沈阳市'},{'cname':'大连市'}]
+        },{
+            'n':'吉林省',
+            'cs':[{'cname':'长春市'},{'cname':'吉林市'},{'cname':'白山市'}]
+        }];
+
+    </script>
+    <script type="text/javascript">
+        // $(document).ready(function () {
+        //    
+        // });
+        $(function () {
+            // $("div").html("我是jquery设置的值");
+            // 匹配了id值为d1的div元素
+            // $("div#d1").html("我是jquery设置的值");
+            // 匹配了类属性值为c1的所有div元素
+            // $("div.c1").html("我是jquery设置的值");
+            $("button#b1").click(function () {
+                console.log($("div#d1").html());//id选择器
+                console.log($(".c1").html());//类选择器
+
+            });
+            $("#b2").click(function () {
+                console.log($("[id='d3']").html());
+                // console.log($("[href='#']").html());
+                // console.log($("a[href!='#']").html());
+                console.log($("a[href$='.html']").html());
+
+                console.log("--------------");
+                // this是当前元素的dom对象
+                console.log(typeof this);
+                var jqueryB2=$("#b2");
+                console.log(typeof jqueryB2);
+                console.log(jqueryB2==this);
+                console.log(this.innerHTML);
+                //将dom对象转化成jquery对象  使用$()包裹起来即可
+                console.log($(this).html());
+                console.log($(document.getElementById("d1")).html());
+            });
+            $("#b3").click(function () {
+                console.log($('ul li:first').html());
+            });
+            $("#b4").click(function () {
+                var str=$("p:first").html();
+                console.log(str);
+                // jquery设置css样式，css（样式名称，样式值）  dom.style.back----=zhi ;
+                $("p:even").css("background-color","red");
+                // 匹配了奇数的span
+                $("span:odd").css("background-color","red");
+            });
+            $('#b5').click(function () {
+                // $('ul li:eq(3)').css("background-color","blue");
+                // $('ul li:gt(2)').css("background-color","blue");
+                // $('ul li:lt(2)').css("background-color","blue");
+                $(':empty').css("background-color","blue");
+                $(':empty').css("color","red");
+                $('input').hide();//隐藏匹配所有元素
+                $('li').hide();
+            });
+
+
+            $('#b6').click(function () {
+                $('li:hidden').show();//将隐藏的所有元素显示出来
+                $('li:hidden').css('background-color','red');
+
+            });
+
+            $('#b7').click(function () {
+                // :text  匹配的是所有type为text的input元素
+                $(':text').css('background-color','red');
+                $(':text').css('color','blue');
+
+                $(':radio').css('background-color','blue');
+                $(':radio').css('color','red');
+
+            });
+
+            $('#b8').click(function () {
+                console.log($(":selected").html());
+            });
+            $('#b9').click(function () {
+                    var p1=province.p1;
+                    var p2=province.p2;
+                    var p3=province.p3;
+                    var domOp1=document.createElement('option');
+                    var txt1=document.createTextNode(p1);
+                    domOp1.appendChild(txt1);
+                    domOp1.setAttribute("id",'p1');
+                    document.getElementById("ss1").appendChild(domOp1);
+
+                    var domOp2=document.createElement('option');
+                    var txt2=document.createTextNode(p2);
+                    domOp2.appendChild(txt2);
+                    domOp2.setAttribute("id",'p2');
+                    document.getElementById("ss1").appendChild(domOp2);
+            });
+            $('#ss1').change(function () {
+                $('#ss2').empty();
+                // 获取被选中的省份
+                var provinceName=$('#ss1 :selected').html();
+                // console.log( ss);
+                for(var i=0;i<citys.length;i++){
+                    var cjson=citys[i];//第一个json
+                    if(cjson.n==provinceName){
+                        var mid=cjson.cs;
+                        for(var j=0;j<mid.length;j++){
+                            var m1=mid[j];
+                            var cityName=m1.cname;
+                            // console.log(cityName);
+                            var op1=document.createElement("option");
+                            op1.appendChild(document.createTextNode(cityName));
+                            document.getElementById("ss2").appendChild(op1);
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<fieldset>
+    <legend>表单选择器</legend>
+    <button id="b7">单机我看效果</button>
+    <button id="b8">单机我看效果</button>
+    <button id="b9">设置省份</button>
+    <input type="text" value="abc"/>
+    <input type="password" value="abc"/>
+    <input type="radio" value="abc"/>
+    <input type="checkbox" value="abc"/>
+    <input type="submit" name="dddd">
+    <hr/>
+    <!--<select multiple="multiple">-->
+    <select id="ss1">
+        <option>Volvo</option>
+        <option selected="selected">Saab</option>
+        <option>Mercedes</option>
+        <option>Audi</option>
+    </select>
+    省份<br/>
+    <select  id="ss2">
+        <option>Volvo</option>
+        <option selected="selected">Saab</option>
+        <option>Mercedes</option>
+        <option>Audi</option>
+    </select>
+城市
+</fieldset>
+    <fieldset>
+        <legend>index选择器</legend>
+        <button id="b5">单机我看效果</button>
+        <button id="b6">单机我看效果</button>
+        <ul>
+            <li>第1章</li>
+            <li>第2章</li>
+            <li>第3章</li>
+            <li>第4章</li>
+            <li>第5章</li>
+        </ul>
+        <p>11111111</p>
+        <input type="text" value="abc"/>
+        <input type="hidden" name="dddd">
+        <div>
+            <p>sssss</p>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>伪类选择器</legend>
+        <button id="b4">单击我看效果</button>
+        <span>1111</span>
+        <span>222</span>
+        <span>333</span>
+        <span>4444</span>
+        <span>5555</span>
+        <p>我是第一段落</p>
+        <p>我是第二段落</p>
+        <p>我是第三段落</p>
+        <p>我是第四段落</p>
+    </fieldset>
+    <fieldset>
+        <legend>后代伪类选择器</legend>
+        <button id="b3">单击我看效果</button>
+        <ul>
+            <li>我是第一项</li>
+            <li>我是第二项</li>
+            <li>我是第三项</li>
+            <li>我是第四项</li>
+        </ul>
+
+        <ol>
+            <li>我是第一项ol</li>
+            <li>我是第二项ol</li>
+            <li>我是第三项ol</li>
+            <li>我是第四项ol</li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>属性选择器</legend>
+        <button id="b2">单机我看效果</button>
+        <a href="#">我是连接</a>
+        <a href="01_hello.html">333333333333</a>
+        <div id="d2">我是div2</div>
+        <div id="d3">我是div3</div>
+    </fieldset>
+    <fieldset>
+        <legend>元素选择器、id选择器、类选择器</legend>
+        <button id="b1">单机我看效果</button>
+        <div id="d1">默认值1</div>
+        <div class="c1">默认值2</div>
+        <div class="c2">默认值3</div>
+    </fieldset>
+</body>
+</html>

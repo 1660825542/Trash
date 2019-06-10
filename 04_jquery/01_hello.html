@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--导入jquery-->
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+      /*  window.onload=function(){
+            document.getElementById("div1").innerHTML="js设置的值";
+        }*/
+      // ready()是文档准备就绪事件，等同于onload事件
+      // 为了避免混淆以及简化jquery代码，提供了$号代替这个jQuery
+      // jQuery提供了一个符号$号来代替这个核心函数
+      
+        $(document).ready(function () {
+            document.getElementById("div1").innerHTML="js|||||jQuery设置的值";
+            console.log(typeof $);
+            console.log($==jQuery);
+        });
+        // 如下是文档准备就绪事件的简写形式
+        // $(function () {
+        //     document.getElementById("div1").innerHTML="js|||||jQuery设置的值简写形式";
+        // });
+    </script>
+</head>
+<body>
+    <div id="div1">我是div元素的值</div>
+</body>
+</html>

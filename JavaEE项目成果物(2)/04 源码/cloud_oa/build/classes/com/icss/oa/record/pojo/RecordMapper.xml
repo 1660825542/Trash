@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RECORD">
+	<resultMap id="BaseResultMap" type="Record">
+		<id column="REC_ID" jdbcType="DECIMAL" property="recId" />
+		<result column="MEET_ID" jdbcType="DECIMAL" property="meetId" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="Record">
+		<result column="REC_HTML" jdbcType="BLOB" property="recHtml" />
+	</resultMap>
+
+	<insert id="insert" parameterType="Record">
+		insert into record(rec_id,meet_id,rec_html)
+		values (record_seq.nextval,
+		#{meetId,jdbcType=DECIMAL},
+		#{recHtml,jdbcType=BLOB})
+	</insert>
+
+	<select id="query" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		select * from RECORD where MEET_ID=#{meetId,jdbcType=DECIMAL}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from record
+		where meet_id =#{meetId,jdbcType=DECIMAL}
+	</delete>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- ##########shiro框架配置########## 开始 -->
+
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<bean id="myRealm" class="com.icss.oa.common.MyRealm"></bean>
+	 
+	<!-- 缓存-->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager" />
+			 
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 缓存 -->
+		<property name="cacheManager" ref="cacheManager" />		
+		<property name="realm" ref="myRealm" />
+	</bean>
+
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<!-- id="shiroFilter"必须要和web.xml中过滤器名称保持一致 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	
+		<property name="securityManager" ref="securityManager" />
+
+		<!-- #####以下为可选配置，请按照实际项目需要进行配置#### -->
+		<!-- 登录的url -->
+		<property name="loginUrl" value="/pages/indexLogin.jsp" />
+		
+		<!-- 登录成功跳转的页 -->
+		<property name="successUrl" value="/pages/index.jsp" />
+		
+		<!-- 权限验证失败跳转的url -->
+		<property name="unauthorizedUrl" value="/pages/failed.jsp" />
+		
+		<!-- filters属性也是可选的，用来声明一些可以在filterChainDefinitions 里面使用的filter。 如果你声明的filter名称是shiro默认有的，那么将会覆盖默认的filter -->
+		<property name="filterChainDefinitions">
+			<value>
+			    /appuser/* = anon
+			    /notice/onePieceNotice.action* = anon
+				/pages/indexLogin.jsp = anon
+				/login/login.action* = anon
+				/css/** = anon
+				/image/** = anon
+				/img/** = anon
+				/js/** = anon
+				
+				/dept/insert.action* = roles[superadmin]
+				/dept/update.action* = roles[superadmin]
+				/dept/delete.action* = roles[superadmin]
+				/dept/query.action* = roles[superadmin]
+				/dept/queryAjaxHaveChild.action* = roles[superadmin]
+				/dept/querySelectDept.action* = authc
+				
+				/pos/insert.action* = roles[superadmin]
+				/pos/update.action* = roles[superadmin]
+				/pos/delete.action* = roles[superadmin]
+				/pos/query.action* = roles[superadmin]
+				/pos/queryAjaxHaveChild.action* = roles[superadmin]
+				/pos/querySelectDept.action* = authc
+				/pos/queryByIndex.action* = roles[superadmin]
+				
+				/emp/* = roles[superadmin]
+				
+				/role/* = roles[superadmin]
+				
+				/perm/* = roles[superadmin]
+				
+				/asscom/* = roles[assignadmin]
+				/assemp/* = roles[assignadmin]
+				/comreq/* = roles[assignadmin]
+				/empcom/* = roles[assignadmin]
+				
+				/pages/Assign/* = roles[assignadmin]
+				
+				
+				/car/* = roles[caradmin]
+				/pages/Car/* = roles[caradmin]
+				/pages/CarApply/CarChosen.jsp = roles[caradmin]
+				/pages/CarApply/CarAllot.jsp = roles[caradmin]
+				/pages/CarApply/QueryRecord.jsp = roles[caradmin]
+
+				
+				/pages/systemAddEmp.jsp = roles[superadmin]
+				/pages/system/editsuccess.jsp = roles[superadmin]
+				/pages/system/editfail.jsp = roles[superadmin]
+				
+				/room/insert.action* = roles[superadmin]
+				/room/delete.action* = roles[superadmin]
+				/pages/Room/InsertRoomSmall.jsp = roles[superadmin]
+				
+				/room/querySmall.action* = perms[apply]
+				/pages/Room/QueryRoomSmall.jsp = perms[apply]
+				/meeting/insert.action* = perms[apply]
+				/meeting/queryByRoomId.action* = perms[apply]
+				/meeting/queryByState.action* = perms[approve]
+				/meeting/queryByOriginator.action* = perms[apply]
+				/meeting/deleteById.action* =perms[apply]
+				/meeting/queryByState.action* = perms[approve]
+				/meeting/refuseState.action* = perms[approve]
+				/meeting/agreeState.action* = perms[approve]
+				/pages/Meeting/ApplyMeeting.jsp* = perms[apply]
+				/pages/Meeting/ApproveMeeting.jsp* = perms[approve]
+				/pages/Meeting/OriginatorMeeting.jsp* = perms[apply]
+				/pages/Meeting/QueryApplySmall.jsp* = perms[apply]
+				/pages/Meeting/QueryEmpSmall.jsp* = perms[apply]
+				/record/upload.action* = perms[apply]
+				/record/del.action* = perms[apply]
+				
+				/logout = authc,logout
+								
+				/**=authc
+			</value>
+		</property>
+		
+	</bean>
+
+	<!-- ##########shiro框架配置########## 结束 -->
+</beans>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LEAVE_FLOW_LOG" >
+  <resultMap id="BaseResultMap" type="com.icss.oa.process.pojo.LeaveFlowLog" >
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USERID" jdbcType="DECIMAL" property="userid" />
+    <result column="ACTION" jdbcType="DECIMAL" property="action" />
+    <result column="LOGTIME" jdbcType="TIMESTAMP" property="logtime" />
+    <result column="OPINION" jdbcType="VARCHAR" property="opinion" />
+    <result column="TASKID" jdbcType="VARCHAR" property="taskid" />
+    <result column="DEFINEID" jdbcType="VARCHAR" property="defineid" />
+    <result column="PROCINSID" jdbcType="VARCHAR" property="procinsid" />
+    <result column="RECORDID" jdbcType="VARCHAR" property="recordid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  
+  
+  <!-- 插入流程日志 -->
+  <insert id="insert" parameterType="com.icss.oa.process.pojo.LeaveFlowLog" >
+    insert into leave_flow_log (id, userid, action, 
+      logtime, opinion, taskid, 
+      defineid, procinsid, recordid, username
+      )
+    values (leave_flow_log_seq.nextval, #{userid,jdbcType=DECIMAL}, #{action,jdbcType=INTEGER}, 
+      sysdate, #{opinion,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, 
+      #{defineid,jdbcType=VARCHAR}, #{procinsid,jdbcType=VARCHAR}, #{recordid,jdbcType=INTEGER},
+      #{username,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 查询所有流程日志 -->
+  <select id="query" resultMap="BaseResultMap">
+     select * from leave_flow_log       
+  </select>
+  
+  <!-- 查询指定请假记录的流程日志 -->
+  <select id="queryByLeaveId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     select * from leave_flow_log where recordid=#{id} order by logtime asc
+  </select>
+  
+</mapper>

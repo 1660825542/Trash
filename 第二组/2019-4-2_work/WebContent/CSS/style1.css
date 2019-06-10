@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+
+
+body{
+    background-image: url(../img/u=4094025461,4270538772&fm=59.gif);  /*设置背景图片*/
+    background-size: 100% 100%;
+    height: 1000px;
+}
+fieldset{
+    margin: auto;
+    text-align: left;
+    width: 1000px;
+    padding: 80px 50px 100px 50px;
+    border-style: dashed;
+    border-color: rgb(92, 224, 15);
+    border-radius: 40px;
+}
+legend{
+    padding: 10px 50px;
+    font-weight: bold;
+    font-style: italic;
+    color: #ef0a54;
+}
+table{
+    margin :0 auto;
+    border-spacing: 10px
+}
+/*添加颜色样式 */
+#color{
+    color:rgba(1, 13, 22, 0.904);
+}
+#color1{
+    color: rgb(221, 72, 34);
+}
+#color2
+{
+    color:peru;
+}
+#color3{
+    color:midnightblue;
+}
+#style{
+    text-align: center;
+}
+#style1{
+    border-radius: 10px;
+}
+/*设置布局的盒子模型*/
+#box1{
+    position: relative;
+    margin: 0 auto;
+    color: rgba(185, 7, 75, 0.952);
+    font-style: initial;
+    text-align: left;
+}
+#table{
+	margin :0 auto;
+    border-spacing: 40px
+}
+th{
+	color: #ef0a54;
+}

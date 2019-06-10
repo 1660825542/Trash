@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rock.dao.EmployeeDao">
+	<!-- 
+		id:和dao中的方法名一致（注意大小写）
+		parameterType：指定了dao接口中对应方法的参数类型（全类名）
+		resultType：方法的返回值类型(全类名)
+		Rock4.0.            Employee emp=util.queryById(Employee.class,"select * from emp where empno=?",empno);
+	 -->
+	<select id="queryByID" parameterType="java.lang.String" resultType="com.rock.pojo.Employee">
+		select *
+		from emp
+		where empno=#{empno}
+	</select>
+	
+	<select id="queryByIDWithEmployee" parameterType="Employee"  resultType="Employee">
+		select *
+		from emp
+		where empno=#{empno}
+	</select>
+</mapper>

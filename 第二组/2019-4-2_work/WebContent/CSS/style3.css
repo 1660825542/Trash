@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+
+body {
+	background-image: url(../img/tupian.png);
+	background-repeat: repeat;
+	background-size: 100%;
+}
+
+
+fieldset{
+    margin: auto;
+    padding: 80px 50px 100px 50px;
+    text-align: left;
+    width: 1000px;
+    border-style: dashed;
+    border-color: #4fef14;
+    border-radius: 40px;
+}
+legend{
+    padding: 10px 50px;
+    font-weight: bold;
+    font-style: italic;
+    color:#4fef14;
+}
+button{
+	color: #4fff4f;
+    background-color: #e495db;
+}
+#customers
+  {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  width:100%;
+  border-collapse:collapse;
+  }
+
+#customers td, #customers th 
+  {
+  font-size:1em;
+  border:3px solid #4fef14;
+  text-align:center;
+  padding:3px 7px 2px 7px;
+  color: #0061ff;
+  }
+
+#customers th 
+  {
+  font-size:1.1em;
+  text-align:center;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#A7C942;
+  color:#ffffff;
+  }
+a{
+	text-decoration: none;
+	color: #4fff4f;
+}
+a:hover{
+	text-decoration: none;
+	color: #e495db;
+	cursor:pointer;
+}

@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri May 17 11:37:30 CST 2019
+http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact org.apache.spark\:spark-core_2.11\:jar\:2.1.1 from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: GET request of\: org/apache/spark/spark-core_2.11/2.1.1/spark-core_2.11-2.1.1.jar from nexus-aliyun failed
+@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1558064250897

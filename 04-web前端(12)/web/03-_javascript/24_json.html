@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var jsonObj={
+            'name':'刘备',
+            'street':'三国蜀',
+            'phone':'133333333'
+        };
+        // typeof运算符可以返回指定变量或者字面值得类型
+        // alert(typeof jsonObj);
+        // alert(typeof "abc");
+        var s="{\n" +
+            "            'name':'刘备',\n" +
+            "            'street':'三国蜀',\n" +
+            "            'phone':'133333333'\n" +
+            "        }";
+        // console.log(s);
+        // console.log(typeof s);//    --string
+
+        var ss=eval("("+s+")");
+        console.log(typeof ss);//   --object
+
+        var s2='{\n' +
+            '            "name":"刘备",\n' +
+            '            "street":"三国蜀",\n' +
+            '            "phone":"133333333"\n' +
+            '        }';
+        console.log(s2);
+        console.log(typeof s2);
+        var s2Obj=JSON.parse(s2);
+        console.log(typeof s2Obj);
+        var s2Obj_string=JSON.stringify(s2Obj);
+        console.log(typeof s2Obj_string);
+        //
+        // console.log(jsonObj.length);
+        //
+        //
+        // console.log(jsonObj.name);
+        // console.log(jsonObj.street);
+        var User={
+            'name':'rock',
+            'contact':{
+                'firstName':'刘',
+                'secondName':'备'
+            },
+            'phone':'14444444444'
+        };
+        // console.log(User.length);
+        // console.log(User.name+"  "+User.phone+"  "+User.contact.firstName+User.contact.secondName)
+
+        var company={
+            'employees':[{
+                'name':'关萍',
+                'phone':'5555555'
+            },{
+                'name':'关羽',
+                'phone':'22222'
+            },{
+                'name':'张飞',
+                'phone':'33333'
+            }],
+            'managers':[{
+                'name':'刘备',
+                'phone':'111111'
+            },{
+                'name':'赵云',
+                'phone':'4444444'
+            }]
+        };
+        // console.log("--------------------");
+        for(var i=0;i<company.employees.length;i++){
+            var ejson=company.employees[i];
+            // console.log(ejson.name);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

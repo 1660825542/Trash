@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        // 文档准备就绪
+        $(document).ready(function () {
+            // 匹配了页面中的所有div元素
+            var aa=$("#div1");                     //jquery对象
+            var bb=document.getElementById("div1");//js中的dom对象
+            // bb.innerHTML="dom值";
+            aa.innerHTML="sssssssss";
+            console.log(typeof aa);
+            console.log(typeof bb);
+            console.log(aa==bb);
+        });
+        // jquery代码
+    </script>
+</head>
+<body>
+    <div id="div1">我是div元素的值1</div>
+    <p>我是p元素的值</p>
+    <div>我是div元素的值2</div>
+</body>
+</html>

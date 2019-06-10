@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+
+  <class name="shili.User" table="USER" >
+    <id name="id" type="long" column="ID">
+      <generator class="increment"/>
+    </id>
+
+    <property name="name" type="string" >
+        <column name="NAME" />
+    </property>
+    <property name="phone" type="string" >
+        <column name="PHONE"  />
+    </property>
+    <property name="password" type="string" >
+        <column name="PASSWORD"  />
+    </property>
+    <property name="address" type="string" >
+        <column name="ADDRESS" />
+    </property>
+    <set name="shopping" cascade="all" inverse="true">
+        <key column="USER_ID"/>
+        <one-to-many class="shili.Shopping"/>
+    </set>
+    <set name="orders" cascade="all" inverse="true">
+        <key column="USER_ID"/>
+        <one-to-many class="shili.Order"/>
+    </set>  
+      
+  </class>
+
+</hibernate-mapping>

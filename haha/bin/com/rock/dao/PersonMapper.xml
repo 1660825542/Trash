@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rock.dao.PersonDao">
+	
+	<sql id="baseColumn">
+		personid,name,age,carid
+	</sql>
+	
+	<insert id="saveSerson" parameterType="Person">
+		insert into person(personid,name,age,carid) values(#{personid},#{name},#{age},#{carid})
+	</insert>
+	<select id="sddfa">
+		select <include refid="baseColumn"/> from person
+	</select>
+	
+	<!-- <select id="queryByid" parameterType="String" resultType="Person"> -->
+	<select id="queryByid" parameterType="String" databaseId="PersonBaseColumnMap">
+		<!-- select * from person where personid=#{personid} -->
+		select a.personid,a.name personname ,a.age,a.carid,b.brand from person a join car b on a.carid=b.carid where a.personid=#{personid}
+	</select>
+	
+	
+	
+	
+	<resultMap type="Person" id="PersonBaseColumnMap">
+		<id column="personid" property="personid"/>
+		<result column="age" property="age"/>
+		<result column="carid" property="carid"/>
+		<result column="name" property="personname"/>
+	</resultMap>
+	
+	<resultMap type="Person" id="PersonBaseMap">
+		<id column="personid" property="personid"/>
+		<result column="age" property="age"/>
+		<result column="carid" property="carid"/>
+		<result column="name" property="name"/>
+	</resultMap>
+	<!-- 
+		resultMap|resultType:设置dao方法的返回值类型
+		resultMap="PersonBaseColumnMap"，是一个手工定义的映射关系，将表中的列名和pojo中的变量对应起来
+		resultType:映射了pojo类对象的变量和结果集列名，默认情况下要求保持结果集列名和pojo类中的变量名一致
+		①、personid;
+		②、setPersonid()方法
+		③、利用反射机制，调用setter方法，将结果集中的数据存于pojo类中的某个变量上
+	 -->
+	<select id="queryByidUseResultMap" resultMap="PersonBaseColumnMap">
+		select a.personid,a.name,a.age,a.carid,b.brand from person a join car b on a.carid=b.carid where a.personid=#{personid}
+	</select>
+	
+		<!-- 
+			通过association子元素完成联级检索
+			property：pojo类中的对象名
+			javaType：这个对象对应的类型（全类名）
+			column：通过哪个列进行关联
+		
+		
+		1：1的联级检索
+		 开发步骤：
+		 ①、在其中一个POJO类中添加另一端对应的POJO类型变量
+		 ②、在映射文件中，通过association元素指定联级操作、
+		 ③、在sql文中要将另一端的数据也检索出来，这样MyBatis就会自动将检索出来的数据注入到对象的属性上
+		 -->
+	<resultMap type="Person" id="PersonWithCarBaseColumnMap">
+		<id column="personid" property="personid"/>
+		<result column="age" property="age"/>
+		<result column="carid" property="carid"/>
+		<result column="name" property="personname"/>
+		<association property="car" javaType="Car" column="carid">
+			<id column="carid" property="carid"/>
+			<result column="brand" property="brand"/>
+			<result column="price" property="price"/>
+			<result column="maxspeed" property="maxspeed"/>
+			<result column="smarkdate" property="smarkdate"/>
+		</association>
+	</resultMap>
+	<select id="queryByIdWithCar" resultMap="PersonWithCarBaseColumnMap" parameterType="String">
+		select a.*,b.* from person a join car b on a.carid=b.carid where personid=#{personid}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

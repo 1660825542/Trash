@@ -1,0 +1,45 @@
+1.权限可以用数字表示
+	r 4
+	w 2
+	x 1
+2. 如果将目录的权限进行改变，那么目录中的内容权限是否改变？
+3. 通过chown 改变目录的拥有者
+   通过chgrp 改变文件的拥有者
+   通过chgrp 改变目录的拥有者
+4. 查找/etc/中所有以【.conf】结尾的文件
+5. 在家目录中查找文件大小大于10M，并且文件末尾是【sqlite】结尾的文件
+6. which 用于命令查找，速度比find快，但是查找的内容少
+7. find是对查找目录进行全盘搜索，速度慢，但是查找内容多
+8. 通过zip压缩一个目录，然后解压到指定目录，看一下解压后的目录中是否包含
+9. 通过tar压缩一个目录，然后解压到指定目录lds2/x1
+10. 每分钟输出ip地址到resultIp.txt
+	*/1 * * * * /sbin/ifconfig>>/home/tom/resultIp.txt
+11. mysql安装过程
+	* 卸载之前存在的mysql rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.x86_64
+	* rpm -ivh MySQL-server-5.5.30-1.linux2.6.x86_64.rpm 
+    * rpm -ivh MySQL-client-5.5.30-1.linux2.6.x86_64.rpm 
+	* 配置mysql初始密码 mysqladmin -u root password 'root'
+	* 登录mysql mysql -u root -p 
+	
+12. JDK安装过程
+	* 卸载之前存在的jdk
+	* 解压到家目录中
+	* 配置环境变量(/etc/profile)
+	   ** PATH
+	   ** CLASSPATH
+	* 重新编译环境变量
+	* 验证是否安装成功
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

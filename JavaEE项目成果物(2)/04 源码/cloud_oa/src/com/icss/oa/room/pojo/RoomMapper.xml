@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ROOM" >
+    <resultMap id="BaseResultMap" type="Room" >
+    <id column="ROOM_ID" property="roomId" jdbcType="DECIMAL" />
+    <result column="ROOM_NAME" property="roomName" jdbcType="VARCHAR" />
+    <result column="ROOM_PLACE" property="roomPlace" jdbcType="VARCHAR" />
+    <result column="ROOM_STATE" property="roomState" jdbcType="DECIMAL" />
+    <result column="ACCOM_NUM" property="accomNum" jdbcType="DECIMAL" />
+    <result column="AIR_CON" property="airCon" jdbcType="DECIMAL" />
+  </resultMap>
+  
+    <insert id="insert" parameterType="Room">
+		insert into ROOM (ROOM_ID,ROOM_NAME,
+		ROOM_PLACE,ROOM_STATE,ACCOM_NUM,
+		AIR_CON)
+		values (room_seq.nextval,
+		#{roomName,jdbcType=VARCHAR},
+		#{roomPlace,jdbcType=VARCHAR},
+		#{roomState,jdbcType=DECIMAL},
+		#{accomNum,jdbcType=DECIMAL},
+		#{airCon,jdbcType=DECIMAL}
+		)
+	</insert>
+
+	<update id="update1" parameterType="java.lang.Integer">
+		update ROOM
+		set 
+		ROOM_STATE =
+		1
+		where ROOM_ID =#{roomId,jdbcType=DECIMAL}
+	</update>
+		<update id="update0" parameterType="java.lang.Integer">
+		update ROOM
+		set 
+		ROOM_STATE =0
+		where ROOM_ID =#{roomId,jdbcType=DECIMAL}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from ROOM
+		where ROOM_ID =#{roomId}
+	</delete>
+
+	<select id="queryById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select * from ROOM where room_id=#{roomId,jdbcType=DECIMAL}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from ROOM
+	</select>
+	
+	<select id="query" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from (select rownum rnum,r.* from room r)
+		where
+		rnum between #{start} and #{end}
+	</select>
+
+	<select id="queryByName" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		<where>
+			<if test="roomName != null and roomName != ''">
+				and ROOM_NAME like #{roomName}||'%'
+			</if>
+		</where>
+		) where rnum between
+		#{start} and #{end}
+	</select>
+
+	<select id="getNameCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		<where>
+			<if test="roomName != null and roomName != ''">
+				and ROOM_NAME like '%'||#{roomName}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="query1"  resultType="java.lang.Integer" parameterType="java.util.Map">
+		<![CDATA[ 
+				select r.room_id from room r
+				inner join meeting m on m.room_id=r.room_id
+				and m.meet_state =1
+      		    and
+				sysdate>=m.meet_datebegin and sysdate<=m.meet_dateend
+		]]>			
+	</select>
+	
+	
+	<select id="queryByPlace" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		<where>
+			<if test="roomPlace != null and roomPlace != ''">
+				and ROOM_PLACE like '%'||#{roomPlace}||'%'
+			</if>
+		</where>
+		) where rnum between
+		#{start} and #{end}
+	
+	</select>
+
+	<select id="getPlaceCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		<where>
+			<if test="roomPlace != null and roomPlace != ''">
+				and ROOM_PLACE like '%'||#{roomPlace}||'%'
+			</if>
+		</where>
+	</select>
+
+	<select id="queryByCondition" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		<where>
+			<if test="roomPlace != null and roomPlace != ''">
+				and ROOM_PLACE like '%'||#{roomPlace}||'%'
+			</if>
+			<if test="airCon != null and airCon != ''">
+				and AIR_CON =#{airCon}
+			</if>
+			<if test="roomState != null ">
+				and ROOM_STATE =#{roomState}
+			</if>
+
+			<if test="accomNum != null and accomNum != ''">
+				and ACCOM_NUM =#{accomNum}
+			</if>
+		</where>
+		) where rnum between
+		#{start} and #{end}
+	
+	</select>
+	
+		<select id="getConditionCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		<where>
+			<if test="airCon != null and airCon != ''">
+				and AIR_CON =#{airCon}
+			</if>
+			<if test="roomState != null and roomState != ''">
+				and ROOM_STATE =#{roomState}
+			</if>
+			<if test="roomPlace != null and roomPlace != ''">
+				and ROOM_PLACE like '%'||#{roomPlace}||'%'
+			</if>
+			<if test="accomNum != null and accomNum != ''">
+				and ACCOM_NUM =#{accomNum}
+			</if>
+		</where>		
+	</select>
+	
+	<select id="queryByState" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		where ROOM_STATE =#{roomState}
+		) where rnum between
+		#{start} and #{end}
+	</select>
+
+	<select id="getStateCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		where ROOM_STATE = #{roomState}
+
+	</select>
+
+	<select id="queryByAccomNum" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		where ACCOM_NUM =#{accomNum}
+		) where rnum between
+		#{start} and #{end}
+	</select>
+
+	<select id="getAccomNumCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		where accomNum = #{accomNum}
+	</select>
+	
+	<select id="queryByAircon" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,r.* from room r
+		where AIR_CON = #{airCon}
+		) where rnum between
+		#{start} and #{end}
+	</select>
+
+	<select id="getAirConCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from room
+		where AIR_CON = #{airCon}
+	</select>
+	
+
+	<select id="getPrimaryKey" resultType="java.lang.Integer">
+	    select room_seq.currval from dual
+	</select>
+</mapper>

@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MESSAGE" >
+    
+  <resultMap id="BaseResultMap" type="Message" >
+    <id column="MESSAGE_ID" property="messageId" jdbcType="DECIMAL" />
+    <result column="SENDER_ID" property="senderId" jdbcType="DECIMAL" />
+    <result column="RECIPIENT_ID" property="recipientId" jdbcType="DECIMAL" />
+    <result column="SEND_DATE" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="SEND_STATUS" property="sendStatus" jdbcType="DECIMAL" />
+    <result column="READ_STATUS" property="readStatus" jdbcType="DECIMAL" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="Message">
+	insert into MESSAGE (MESSAGE_ID, SENDER_ID, RECIPIENT_ID, 
+      SEND_DATE, SEND_STATUS, READ_STATUS, 
+      CONTENT)
+    values (message_seq.nextval, #{senderId,jdbcType=DECIMAL}, #{recipientId,jdbcType=DECIMAL}, 
+      sysdate, #{sendStatus,jdbcType=DECIMAL}, #{readStatus,jdbcType=DECIMAL}, 
+      #{content,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="Message" >
+    update MESSAGE
+    set SENDER_ID = #{senderId,jdbcType=DECIMAL},
+      RECIPIENT_ID = #{recipientId,jdbcType=DECIMAL},
+      SEND_DATE = sysdate,
+      SEND_STATUS = #{sendStatus,jdbcType=DECIMAL},
+      READ_STATUS = #{readStatus,jdbcType=DECIMAL},
+      CONTENT = #{content,jdbcType=VARCHAR}
+    where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateSendStatus" parameterType="long" >
+    update MESSAGE
+    set SEND_STATUS = 1
+    where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateReadStatus" parameterType="long" >
+    update MESSAGE
+    set READ_STATUS = 1
+    where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateSendDate" parameterType="long">
+    update MESSAGE
+    set SEND_DATE = sysdate
+    where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </update>
+  
+  <insert id="insertSendedMessage" parameterType="java.util.Map">
+	insert into SENDED_MESSAGE (SM, EMP_ID, SENDED_MESSAGE_ID)
+    values (sm_seq.nextval, 
+    #{senderId,jdbcType=DECIMAL}, 
+    #{messageId,jdbcType=DECIMAL})
+  </insert>
+  
+  <insert id="insertReceivedMessage" parameterType="java.util.Map">
+	insert into RECEIVED_MESSAGE (RM, EMP_ID, RECEIVED_MESSAGE_ID)
+    values (rm_seq.nextval, 
+    #{recipientId ,jdbcType=DECIMAL}, 
+    #{messageId,jdbcType=DECIMAL})
+  </insert>
+  
+  <delete id="deleteMessage" parameterType="long">
+	delete from MESSAGE
+	where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+	and SEND_STATUS = 0
+  </delete>
+  
+  <delete id="deleteSendedMessage" parameterType="java.util.Map">
+	delete from SENDED_MESSAGE
+	where EMP_ID = #{senderId,jdbcType=DECIMAL}
+	and SENDED_MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </delete>
+  
+  <delete id="deleteReceivedMessage" parameterType="java.util.Map">
+	delete from RECEIVED_MESSAGE
+	where EMP_ID = #{recipientId,jdbcType=DECIMAL}
+	and RECEIVED_MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </delete>
+  
+  <select id="queryById" resultMap="BaseResultMap" parameterType="long">
+	select * from MESSAGE
+	where MESSAGE_ID = #{messageId,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="getSendedCount" resultType="java.lang.Integer">
+	select count(*) from SENDED_MESSAGE s
+	inner join MESSAGE on s.SENDED_MESSAGE_ID = MESSAGE.MESSAGE_ID
+	where SEND_STATUS = 1 and s.EMP_ID = #{id}
+  </select>
+  
+  <select id="querySendedMessage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select * from
+	(select rownum rnum,a.*from 
+	(select m.* 
+	from SENDED_MESSAGE s
+	inner join MESSAGE m on SENDED_MESSAGE_ID = MESSAGE_ID
+	where EMP_ID = #{id} and SEND_STATUS = 1
+	order by SEND_DATE desc) a)
+	where rnum between #{start} and #{end}
+  </select>
+  
+  <select id="getReceivedCount" resultType="java.lang.Integer">
+	select
+	count(*)
+	from RECEIVED_MESSAGE r
+	where r.EMP_ID = #{id}
+  </select>
+  
+  <select id="queryReceivedMessage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select * from
+	(select rownum rnum,a.*from 
+	(select m.* 
+	from RECEIVED_MESSAGE
+	inner join MESSAGE m on RECEIVED_MESSAGE_ID = MESSAGE_ID
+	where EMP_ID = #{id}
+	order by SEND_DATE desc) a)
+	where rnum between #{start} and #{end}	
+  </select>
+  
+  <select id="getNotSendCount" resultType="java.lang.Integer">
+	select count(*) from SENDED_MESSAGE s
+	inner join MESSAGE on s.SENDED_MESSAGE_ID = MESSAGE.MESSAGE_ID
+	where SEND_STATUS = 0 and s.EMP_ID = #{id}
+  </select>
+  
+  <select id="queryNotSendMessage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select * from
+	(select rownum rnum,a.*from 
+	(select m.*
+	from SENDED_MESSAGE
+	inner join MESSAGE m on SENDED_MESSAGE_ID = MESSAGE_ID
+	where SEND_STATUS = 0 and EMP_ID = #{id}
+	order by SEND_DATE desc) a)
+	where rnum between #{start} and #{end}
+  </select>
+  
+  <select id="getNotReadCount" resultType="java.lang.Integer">
+	select count(*) from RECEIVED_MESSAGE r
+	inner join MESSAGE on r.RECEIVED_MESSAGE_ID = MESSAGE.MESSAGE_ID
+	where READ_STATUS = 0 and r.EMP_ID = #{id}
+  </select>
+  
+  <select id="queryNotReadMessage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select * from
+	(select rownum rnum,a.*from 
+	(select m.* 
+	from RECEIVED_MESSAGE
+	inner join MESSAGE m on RECEIVED_MESSAGE_ID = MESSAGE_ID
+	where READ_STATUS = 0 and EMP_ID = #{id}
+	order by SEND_DATE desc) a)
+	where rnum between #{start} and #{end}
+  </select>
+ 
+  <!-- 获得当前的序列主键值 -->
+  <select id="getPrimaryKey" resultType="long">
+	select message_seq.currval from dual
+  </select>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+	select * from MESSAGE
+  </select>
+</mapper>

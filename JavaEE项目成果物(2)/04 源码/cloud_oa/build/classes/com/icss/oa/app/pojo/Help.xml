@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="APPUSER">
+	<select id="queryAllForContact" resultType="java.util.Map">
+		select
+		t.emp_name,t.emp_num,t.gender,t.phone,d.dept_name,p.pos_name from
+		EMPLOYEE t,DEPARTMENT d,POSITION p where
+		t.position_id=p.pos_id and
+		t.department_id=d.dept_id
+	</select>
+	<select id="queryEmpDetail" parameterType="java.lang.String" resultType="java.util.Map">
+		select
+		t.emp_name,t.gender,t.phone,d.dept_name,p.pos_name,t.email,t.qq,t.introduction from
+		EMPLOYEE t,DEPARTMENT d,POSITION p where
+		t.position_id=p.pos_id and
+		t.department_id=d.dept_id and t.emp_num = #{empNum}
+	</select>
+</mapper>

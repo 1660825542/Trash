@@ -1,0 +1,19 @@
+/*⑥、子元素選擇器*/
+
+h1>strong{
+    background-color: red;
+}
+li+li{
+    background-color: gold;
+}
+
+a:link {color: #FF00DD}
+a:visited{
+    color: green;
+}
+a:hover{
+    background-color: red;
+}
+a:active{
+    color: blue;
+}

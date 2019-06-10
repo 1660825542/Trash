@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MEETING">
+
+	<!-- orm映射 -->
+	<resultMap id="BaseResultMap" type="Meeting">
+
+		<id column="MEET_ID" property="meetId" jdbcType="DECIMAL" />
+	    <result column="MEET_DATEBEGIN" property="meetDateBegin" jdbcType="TIMESTAMP" />
+	    <result column="ROOM_ID" property="roomId" jdbcType="DECIMAL" />
+	    <result column="ORIGINATOR" property="originator" jdbcType="DECIMAL" />
+	    <result column="THEME" property="theme" jdbcType="VARCHAR" />
+		<result column="MEET_DATEEND" property="meetDateEnd" jdbcType="TIMESTAMP" />
+		<result column="MEET_STATE" property="meetState" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<insert id="insert" parameterType="Meeting">
+		insert into MEETING (MEET_ID,
+		MEET_DATEBEGIN,ROOM_ID,ORIGINATOR,
+		THEME,MEET_DATEEND,MEET_STATE)
+		values (meet_seq.nextval,
+		#{meetDateBegin,jdbcType=TIMESTAMP},
+		#{roomId,jdbcType=DECIMAL},
+		#{originator,jdbcType=DECIMAL},
+		#{theme,jdbcType=VARCHAR},
+		#{meetDateEnd,jdbcType=TIMESTAMP},
+		#{meetState,jdbcType=DECIMAL})
+	</insert>
+
+	<update id="update" parameterType="Meeting">
+		update MEETING
+		set MEET_DATEBEGIN =
+		#{meetDateBegin,jdbcType=TIMESTAMP},
+		ROOM_ID =
+		#{roomId,jdbcType=DECIMAL},
+		ORIGINATOR = 
+		#{originator,jdbcType=DECIMAL},
+		THEME =
+		#{theme,jdbcType=VARCHAR},
+		MEET_DATEEND=
+		#{meetDateEnd,jdbcType=TIMESTAMP},
+		MEET_STATE =
+		#{meetState,jdbcType=DECIMAL}
+		where MEET_ID = #{meetId,jdbcType=DECIMAL}
+	</update>
+
+	<delete id="deleteByState" parameterType="java.lang.Integer">
+		delete from MEETING
+		where
+		meet_state = #{meetState,jdbcType=DECIMAL}
+	</delete>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from MEETING
+		where
+		MEET_ID = #{meetId,jdbcType=DECIMAL}
+	</delete>
+
+	<select id="queryById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select * from MEETING where MEET_ID=#{meetId,jdbcType=DECIMAL}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from MEETING
+	</select>
+	
+	<select id="query"  resultType="java.util.Map" parameterType="java.util.Map">
+		select * from (select rownum rnum,a.*from
+		(select m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.theme,m.meet_dateend,m.meet_state
+		from meeting m
+		left outer join room r on m.room_id=r.room_id
+		left outer join employee e on e.emp_id=m.originator
+		order by m.meet_datebegin desc) a)
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="queryByRoomId" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from (select rownum rnum,a.*from
+		(select m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		where ROOM_ID=#{roomId}
+		order by m.meet_datebegin desc) a)
+		where rnum between #{start} and #{end}
+
+	</select>
+	
+	
+	<select id="queryByTheme" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		where THEME like '%'||#{theme}||'%'
+		and meet_state=1)
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="queryByEmpId" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from (select rownum rnum,a.*from
+		(select m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		left outer join emp_meeting em on em.meet_id=m.meet_id
+		where emp_id=#{empId}
+		and meet_state=1
+		order by m.meet_datebegin desc) a)
+		where rnum between #{start} and #{end}
+	</select>
+	
+		<select id="getByEmpIdCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count (*) from (select
+		m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		left outer join emp_meeting em on em.meet_id=m.meet_id
+		where emp_id=#{empId}
+		and meet_state=1)
+	</select>
+	
+	<select id="queryByOriginator" resultType="java.util.Map" parameterType="java.lang.Integer">
+		select * from (select rownum rnum,a.*from
+		(select m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		where ORIGINATOR=#{originator}
+		order by m.meet_datebegin desc) a)
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="getByOriginatorCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count (*) from (select
+		m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		where ORIGINATOR=#{originator})
+	</select>
+	
+	<select id="getByThemeCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count (*) from (select 
+		m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.meet_dateend,m.theme,m.meet_state
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		left outer join room r on m.room_id=r.room_id
+		where THEME like '%'||#{theme}||'%')
+	</select>
+	
+	<select id="getRoomCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from meeting
+		where ROOM_ID =#{roomId}
+	</select>
+	
+	<select id="queryResult" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		<![CDATA[ 
+		    select * from  meeting m
+			where ROOM_ID =#{roomId}
+			and
+			(
+				(#{meetDateBegin}>=m.meet_datebegin and #{meetDateBegin}<=m.meet_dateend)
+			  or
+				(#{meetDateEnd}>=m.meet_datebegin and #{meetDateEnd}<=m.meet_dateend)
+			  or
+			  	(#{meetDateBegin}<m.meet_datebegin and #{meetDateEnd}>m.meet_dateend)
+			) 
+		]]>	
+	
+	</select>
+	
+	<select id="getResultCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		<![CDATA[
+			select
+			count(*)
+			from meeting m
+			where ROOM_ID =#{roomId}
+			and
+			(
+			m.meet_datebegin < #{meetDateBegin}
+			and m.meet_dateend > #{meetDateBegin}
+			)
+			or
+			(
+			m.meet_datebegin <#{meetDateEnd}
+			and m.meet_dateend >#{meetDateEnd}
+			)
+		]]>
+	</select>
+	
+	<select id="queryByState"  resultType="java.util.Map" parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,m.meet_id,m.meet_datebegin,r.room_place,e.emp_name,m.theme,m.meet_dateend,m.meet_state
+		from meeting m
+		left outer join room r on m.room_id=r.room_id
+		left outer join employee e on e.emp_id=m.originator
+    	where MEET_STATE=#{meetState}
+    	and e.department_id=#{departmentId}) 
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="getStateCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from meeting m
+		left outer join employee e on e.emp_id=m.originator
+		where MEET_STATE=#{meetState}
+		and e.department_id=#{departmentId}
+	</select>
+	
+
+	<select id="getPrimaryKey" resultType="java.lang.Integer">
+	    select meet_seq.currval from dual
+	</select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#b1').click(function () {
+                $('input[type="checkbox"]').prop('checked',true);
+            });
+            $('#b2').click(function () {
+                $('input[type="checkbox"]').prop('checked',false);
+            });
+            // 将这个回调方法的返回值设为checked属性上
+            $('#b3').click(function () {
+                $('input[type="checkbox"]').prop('checked',function () {
+                    return false;
+                });
+            });
+            $('#b4').click(function () {
+                $('input[type="checkbox"]').prop('checked',function (index,checkedValue) {
+                   console.log(index+"::"+checkedValue);
+                });
+            });
+            $('#b5').click(function () {
+                $('input[type="checkbox"]').prop('checked',function (index,checkedValue) {
+                    return !checkedValue;
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <button id="b1">全选</button>
+    <button id="b2">全不选</button>
+    <button id="b3">全不选(callback)</button>
+    <button id="b4">验证回调方法的参数意义</button>
+    <button id="b5">反选</button>
+    <input type="checkbox" value="aa">aaa
+    <input type="checkbox" value="aa">bbb
+    <input type="checkbox" value="aa">ccc
+    <input type="checkbox" value="aa">ddd
+    <input type="checkbox" value="aa">eee
+</body>
+</html>

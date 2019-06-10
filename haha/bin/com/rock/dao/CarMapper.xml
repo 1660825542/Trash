@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rock.dao.CarDao">
+	<insert id="saveCar" parameterType="Car">
+		insert into car(carid,brand,price,maxspeed,smarkdate) values(#{carid},#{brand},#{price},#{maxspeed},#{smarkdate})
+	</insert>
+	<delete id="deleteCarByCarId" parameterType="java.lang.String">
+		delete from car
+		where carid=#{carid}
+	</delete>
+	
+	
+	<delete id="deleteCarByCar" parameterType="Car">
+		delete from car
+		where carid=#{carid}
+	</delete>
+	
+	<update id="updateCar" parameterType="Car">
+		update car set brand=#{brand},price=#{price},maxspeed=#{maxspeed} where carid=#{carid}
+	</update>
+	
+	<select id="queryByCarId" resultType="Car" parameterType="String">
+		select * from car 
+		where carid=#{carid}
+	</select>
+	
+	<select id="queryAllCar" resultType="Car">
+		select * from car
+	</select>
+	<select id="getCarByIdToMap" resultType="hashmap">
+		select * from car
+		where carid=#{carid}
+	</select>
+	<!-- 
+		注意：MyBatis的模糊检索需要使用$,下发如下：
+		MyBatis中$和#却别：#是欲处理的sql问，而整个$是字符串拼接的sql文
+	 -->
+	<select id="queryByLike" parameterType="Car" resultType="Car">
+		select * from car
+		where brand like '%${brand}%'
+	</select>
+</mapper>

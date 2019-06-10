@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var abc="美丽的大连不美丽";
+        // anchor：在js中创建锚
+        document.write(abc.anchor("part1"));
+        // 返回字符串的大号字
+        document.write(abc.big());
+        // 返回字符串的加粗显示
+        document.write(abc.bold());
+        document.write(abc.charAt(1));
+        var l=abc.length;
+        document.write("<hr/>");
+        for(var i=0;i<l;i++)
+            document.write(abc.charAt(i)+"<br/>");
+         var s="abcdef";
+         document.write(s.charCodeAt(0));
+         document.write(s.concat("ABCDEF"));
+         document.write("<hr/>");
+         document.write(s.indexOf('e'));
+
+         var astr="js创建连接";
+         document.write(astr.link("http://www.baidu.com"));
+         document.write(s.substring(2));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

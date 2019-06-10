@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="REIM_FLOW_LOG" >
+  <resultMap id="BaseResultMap" type="com.icss.oa.process.pojo.ReimFlowLog" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="ACTION" property="action" jdbcType="DECIMAL" />
+    <result column="LOGTIME" property="logtime" jdbcType="TIMESTAMP" />
+    <result column="OPINION" property="opinion" jdbcType="VARCHAR" />
+    <result column="TASKID" property="taskid" jdbcType="VARCHAR" />
+    <result column="DEFINEID" property="defineid" jdbcType="VARCHAR" />
+    <result column="PROCINSID" property="procinsid" jdbcType="VARCHAR" />
+    <result column="RECORDID" property="recordid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.icss.oa.process.pojo.ReimFlowLog" >
+    insert into REIM_FLOW_LOG (ID, USERID, ACTION, 
+      LOGTIME, OPINION, TASKID, 
+      DEFINEID, PROCINSID, RECORDID, 
+      USERNAME)
+    values (reim_flow_log_seq.nextval, #{userid,jdbcType=VARCHAR}, #{action,jdbcType=DECIMAL}, 
+      sysdate, #{opinion,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, 
+      #{defineid,jdbcType=VARCHAR}, #{procinsid,jdbcType=VARCHAR}, #{recordid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR})
+  </insert>
+<!-- 查询所有流程日志 -->
+  <select id="query" resultMap="BaseResultMap">
+     select * from reim_flow_log       
+  </select>
+  
+  <!-- 查询指定报销记录的流程日志 -->
+  <select id="queryByReimId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     select * from reim_flow_log where recordid=#{id}  order by logtime asc
+  </select>
+  
+  <!-- 根据流程id得到报销记录id -->
+  <select id="queryRecordidByProid" parameterType="java.lang.String" resultType="java.lang.String">
+      select distinct(recordid) from reim_flow_log where procinsid=#{proId}
+  </select>
+</mapper>

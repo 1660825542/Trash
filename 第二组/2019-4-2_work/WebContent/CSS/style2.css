@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+a {
+	text-decoration: none;
+}
+
+body {
+	background-image: url(../img/tupian.png);
+	background-repeat: repeat;
+	background-size: 100%;
+}

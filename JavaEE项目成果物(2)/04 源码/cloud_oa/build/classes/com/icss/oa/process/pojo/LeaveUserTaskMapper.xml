@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LEAVE_USER_TASK" >
+  
+  <!-- 连接查询系统task表,请假记录表，流程日志表，得到当前用户的代办任务列表 -->
+  <select id="query" parameterType="java.lang.String" resultType="com.icss.oa.process.pojo.LeaveUserTask">
+   SELECT  t.ID_ AS taskid,
+			t.PROC_INST_ID_ AS procinsid,
+			t.NAME_ AS taskname,
+			t.DESCRIPTION_ AS description,
+			t.ASSIGNEE_ AS assignee,
+			l.leave_id AS recordid,
+			l.emp_name AS username,
+			l.emp_id AS userid,
+			l.reason AS reason,
+			l.time AS createtime,
+			l.status AS status,
+			l.endstatus AS endstatus,
+			l.leader_name AS leadername
+	FROM act_ru_task t,leave l,(SELECT procinsid,recordid FROM leave_flow_log GROUP BY procinsid,recordid) f
+	WHERE	t.PROC_INST_ID_=f.procinsid
+	AND	f.recordid=l.leave_id
+	AND	t.ASSIGNEE_= #{assignee}
+  </select>
+  
+</mapper>

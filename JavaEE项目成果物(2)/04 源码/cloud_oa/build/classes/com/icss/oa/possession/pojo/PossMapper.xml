@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="POSS">
+
+	<resultMap id="BaseResultMap" type="com.icss.oa.possession.pojo.Poss">
+		<id column="POSS_ID" property="possId" />
+		<result column="POSS_NAME" property="possName"  />
+		<result column="POSS_CATEGORY" property="possCate"  />
+		<result column="POSS_TYPE" property="possType"  />
+		<result column="POSS_PRICE" property="possPrice"  />
+		<result column="POSS_UNUSED" property="possUnuse"  />
+		<result column="POSS_USED" property="possUse"  />
+	
+		
+	</resultMap>
+
+	<insert id="insert" parameterType="com.icss.oa.possession.pojo.Poss">
+		insert into POSSESSION (POSS_ID,
+		POSS_NAME, POSS_CATEGORY,POSS_TYPE,POSS_PRICE,POSS_UNUSED,POSS_USED
+		)
+		values (poss_seq.nextval,
+		#{possName},#{possCate},#{possType},#{possPrice},
+		#{possUnuse},#{possUse}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.icss.oa.possession.pojo.Poss">
+		update POSSESSION
+		set POSS_NAME =#{possName},
+		    POSS_CATEGORY =#{possCate},
+		    POSS_TYPE =#{possType},
+		    POSS_PRICE =#{possPrice},
+		    POSS_UNUSED = #{possUnuse},
+		    POSS_USED = #{possUse},
+		    where POSS_ID = #{possId},
+	</update>
+	
+	
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from POSSESSION
+		where POSS_ID
+		= #{possId}
+	</delete>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select *
+ 		from POSSESSION
+		where POSS_ID = #{possId}
+	</select>
+	
+
+	<select id="query" resultMap="BaseResultMap">
+
+		select * from (select rownum
+		rnum,d.* from POSSESSION d where d.POSS_USED>0) where rnum between #{start} and #{end}
+
+		
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from POSSESSION where POSS_USED>0
+	</select>
+	
+	<select id="getConditionCateCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select
+		count(*)
+		from POSSESSION 
+		<where> 
+			<if test="possCate != null and possCate != ''">    
+				and POSS_CATEGORY= #{possCate}
+       </if>
+        and POSS_USED>0
+
+		</where>
+	</select>
+	
+	
+	<select id="queryByConditionCate" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,d.* from POSSESSION d
+		<where> 
+			<if test="possCate != null and possCate != ''">    
+				and POSS_CATEGORY= #{possCate}
+       </if>
+        and POSS_USED>0
+		</where>
+		) where rnum between
+		#{start} and #{end}
+	</select>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CARD_CATEGORY" >
+  <resultMap id="BaseResultMap" type="CardCategory" >
+   
+    <id column="CATA_ID" property="cataId" jdbcType="DECIMAL" />
+    <result column="EMP_ID" property="empId" jdbcType="DECIMAL" />
+    <result column="CATA_NAME" property="cataName" jdbcType="VARCHAR" />
+    <result column="CAN_DELETE" property="canDelete" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="CardCategory">
+ 
+    insert into CARD_CATEGORY (CATA_ID,CATA_NAME,EMP_ID,can_delete
+     )
+    values (card_category_seq.nextval,
+           #{cataName,jdbcType=VARCHAR},
+            #{empId,jdbcType=DECIMAL},
+            #{canDelete,jdbcType=DECIMAL}
+     )
+  </insert>
+    
+    <update id="update" parameterType="CardCategory" >
+      update CARD_CATEGORY
+      set CATA_NAME = #{cataName,jdbcType=VARCHAR}    
+      where CATA_ID = #{cataId,jdbcType=DECIMAL}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+      delete from CARD_CATEGORY
+      where CATA_ID = #{cataId,jdbcType=DECIMAL}
+    </delete>
+    
+   <select id="queryById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select * from card_category where cata_id=#{cataId,jdbcType=DECIMAL}
+	</select>
+	
+   	<select id="query" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from card_category  where emp_id=#{empId,jdbcType=DECIMAL}
+	</select>
+	
+   	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from card_category where emp_id=#{empId,jdbcType=DECIMAL}
+	</select>
+	
+   	<select id="queryByPager" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from (select rownum rnum,c.* from card_category c 
+		where emp_id=#{empId,jdbcType=DECIMAL})
+		where
+		rnum between #{start} and #{end}
+	</select>
+	
+   	<select id="queryByCondition" parameterType="CardCategory" resultMap="BaseResultMap">
+		select * from CARD_CATEGORY
+		<where>
+			<if test="cataName != null and cataName != ''">
+				and CARD_NAME=#{cardName}
+			</if>
+		</where>
+	</select>
+	
+   	 
+	
+	
+	<!-- 动态SQL：传入Array数组 -->
+   	<select id="queryByInArray" resultMap="BaseResultMap">	    
+		select * from CARD_CATEGORY				
+		<if test="array.length>0">	   
+			where cata_id in			
+			<foreach collection="array" index="i" item="cataId" open="("
+				close=")" separator=",">
+				#{cataId}
+			</foreach>			
+		</if>		
+	</select>
+  
+    <!-- 获得当前的序列主键值 -->
+	<select id="getPrimaryKey" resultType="java.lang.Integer">
+	    select card_category_seq.currval from dual
+	</select>
+</mapper>

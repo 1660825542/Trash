@@ -1,0 +1,6 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri May 17 11:40:27 CST 2019
+sisu-guice-2.1.7-noaop.jar>nexus-aliyun=
+sisu-guice-2.1.7-noaop.jar>central=
+sisu-guice-2.1.7.pom>central=
+sisu-guice-2.1.7.pom>nexus-aliyun=

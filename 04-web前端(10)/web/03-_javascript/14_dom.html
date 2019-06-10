@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        span{
+            color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        document.write("我是被写入的内容");
+    </script>
+</head>
+<body>
+    <!--<img src="../huang/a1.jpg" id="img1"/>-->
+    <!--是html内联元素-->
+    <span id="s1"></span>
+    <div style="background-color: #A7C942" id="div1">我是div元素的值</div>
+
+
+    <button type="button" onclick="document.getElementById('div1').style.backgroundColor='red'">
+        点击这里
+    </button>
+
+
+
+
+
+    <script type="text/javascript">
+        // document.getElementById("s1").innerHTML="我也是js写入的内容";
+        // 通过dom对象获取html元素的属性值
+        var src=document.getElementById("img1").src;
+        console.log(src);
+        // 通过dom对象设置html元素的属性值
+        // document.getElementById("img1").src="../huang/a2.jpg";
+        var st=document.getElementById("div1").style;
+        st.backgroundColor="red";
+    </script>
+</body>
+</html>

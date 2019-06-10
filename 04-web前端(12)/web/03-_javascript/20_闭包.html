@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+
+        // 通过闭包方式访问局部变量
+        function method() {
+            var age=10;
+            function getAge(){
+                age=30;
+                return age;
+            }
+            return getAge;
+        }
+
+        var out_age=method()();
+
+        console.log(out_age);
+        
+        
+/*
+
+        var age=10;//全局变量
+        function method(){
+            var a=20;//局部变量
+            if(a>10){
+                var b=30;
+            }
+            console.log(b);
+        }
+
+
+        console.log(a);
+        method();
+*/
+
+
+
+    </script>
+</head>
+<body>
+    <button id="b1">添加元素</button>
+    <button id="b2">删除元素</button>
+    <button id="b3" onclick="run();">测试变量</button>
+    <div id="div1"></div>
+
+
+    <script type="text/javascript">
+        var id=1;
+        function run(){
+            console.log(id++);
+        }
+
+
+        document.getElementById("b1").onclick=function (ev) {
+            //在js中创建的一个div的dom对象
+            var newElement=document.createElement("div");
+            newElement.setAttribute("class","c");
+            newElement.setAttribute("id","id"+id++);
+
+            // 向js中新创建的div元素中添加一个子元素
+            newElement.appendChild(document.createTextNode("新增div元素  id="+(id-1)));
+
+            document.getElementById("div1").appendChild(newElement);
+        };
+        document.getElementById("b2").onclick=function (ev) {
+            document.getElementById("div1").removeChild(document.getElementById("id"+--id));
+        }
+    </script>
+</body>
+</html>

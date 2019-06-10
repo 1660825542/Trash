@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function f() {
+            // ?alert("单击了div元素");
+            document.getElementById("div1").style.backgroundColor="#00FF00";
+        }
+        function myOver() {
+            console.log(document.getElementById("div2").innerHTML);
+        }
+        function myOut() {
+            console.log("鼠标离开了div元素");
+        }
+        function myEnter(dom) {
+            alert(dom.innerHTML);
+        }
+        function finish() {
+            alert("页面被浏览器装载完毕");
+            var str=document.getElementById("div1").innerHTML;
+            alert(str);
+        }
+    </script>
+</head>
+<body onload="finish();">
+
+<input type="text" onkeypress="alert('键盘被单击了');" />
+
+
+    <div onclick="f();" id="div1">我是div的值</div>
+    <p onclick="f();">sssss</p>
+    <button onclick="f();">button</button>
+    <div onmouseover="myOver();" id="div2" onmouseout="myOut();">我是div元素的值</div>
+    <!--this:当前元素的dom对象-->
+    <div onmouseenter="myEnter(this);" id="div3" onmouseleave="alert('拜走了，坐回会啊 ');">我是div3的值</div>
+</body>
+</html>

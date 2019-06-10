@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FOLDER" >
+  <resultMap id="BaseResultMap" type="com.icss.oa.folder.pojo.Folder" >
+    <id column="FOLDER_ID" property="folderId" jdbcType="DECIMAL" />
+    <result column="FOLDER_NAME" property="folderName" jdbcType="VARCHAR" />
+    <result column="FOLDER_SIZE" property="folderSize" jdbcType="DECIMAL" />
+    <result column="FOLDER_DESCRIPTION" property="folderDescription" jdbcType="VARCHAR" />
+    <result column="FOLDER_SHARE" property="folderShare" jdbcType="DECIMAL" />
+    <result column="FOLDER_PARENT" property="folderParent" jdbcType="DECIMAL" />
+    <result column="EMP_ID" property="empId" jdbcType="DECIMAL" />
+    <result column="FOLDER_LEFT_SIZE" property="folderLeftSize" jdbcType="DECIMAL" />
+    <result column="CAN_DELETE" property="canDelete" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.icss.oa.folder.pojo.Folder" >
+    insert into FOLDER (FOLDER_ID, FOLDER_NAME, FOLDER_SIZE, 
+      FOLDER_DESCRIPTION, FOLDER_SHARE, FOLDER_PARENT, 
+      EMP_ID, FOLDER_LEFT_SIZE, CAN_DELETE
+      )
+    values (folder_seq.nextval, #{folderName,jdbcType=VARCHAR}, #{folderSize,jdbcType=DECIMAL}, 
+      #{folderDescription,jdbcType=VARCHAR}, #{folderShare,jdbcType=DECIMAL}, #{folderParent,jdbcType=DECIMAL}, 
+      #{empId,jdbcType=DECIMAL}, #{folderLeftSize,jdbcType=DECIMAL}, #{canDelete,jdbcType=DECIMAL}
+      )
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from FOLDER
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </delete>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from FOLDER
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByEmp" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from FOLDER
+    where EMP_ID = #{empId,jdbcType=DECIMAL}
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.icss.oa.folder.pojo.Folder" >
+    update FOLDER
+    set FOLDER_NAME = #{folderName,jdbcType=VARCHAR},
+      FOLDER_DESCRIPTION = #{folderDescription,jdbcType=VARCHAR},
+      FOLDER_SHARE = #{folderShare,jdbcType=DECIMAL}
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </update>
+  
+   <update id="updateShare" parameterType="com.icss.oa.folder.pojo.Folder" >
+    update FOLDER
+    set FOLDER_SHARE = #{folderShare,jdbcType=DECIMAL}
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </update>
+  
+   <update id="updateSize" parameterType="com.icss.oa.folder.pojo.Folder" >
+    update FOLDER
+    set FOLDER_SIZE = #{folderSize,jdbcType=DECIMAL}
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </update>
+  
+   <update id="updateLeftSize" parameterType="com.icss.oa.folder.pojo.Folder" >
+    update FOLDER
+    set FOLDER_LEFT_SIZE = #{folderLeftSize,jdbcType=DECIMAL}
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </update>
+  
+   <select id="getRootFolder" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select *
+       from FOLDER
+       where EMP_ID=#{empId} and can_delete=0
+   </select>
+   
+     <select id="getEmpShareFolder" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select *
+       from FOLDER
+       where EMP_ID=#{empId} and FOLDER_SHARE=1
+   </select>
+  
+   <select id="getChildFolder" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select *
+       from FOLDER
+       where FOLDER_PARENT=#{folderParent}
+   </select>
+   
+   <select id="getShareChildFolder" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select *
+       from FOLDER
+       where FOLDER_PARENT=#{folderParent} and FOLDER_SHARE=1
+   </select>
+   
+   <select id="getPrimaryKey" resultType="java.lang.Integer">
+       select folder_seq.currval from dual
+   </select>
+</mapper>

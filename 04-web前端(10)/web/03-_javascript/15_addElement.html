@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function myClick() {
+            // ①、创建这个新元素  在js中创建div元素的dom对象
+            var newElement=document.createElement("div");
+            // 新建一个TestNode节点（div的值）并将其最加到新的div元素
+            newElement.appendChild(document.createTextNode("我是js创建的div元素的值"));
+            // 向新元素中最加一个属性class，值是d
+            newElement.setAttribute("class","ddddddd");
+            document.getElementById("container").appendChild(newElement);
+        }
+        function myClickRemove() {
+           document.getElementById("container").removeChild(document.getElementById("d2"));
+        }
+    </script>
+</head>
+<body>
+    <button onclick="myClick();">添加元素</button>
+    <button onclick="myClickRemove();">删除元素</button>
+    <div id="container">
+        <p id="d1">我是container元素内部的p元素的值111</p>
+        <p id="d2">我是container元素内部的p元素的值222</p>
+    </div>
+</body>
+</html>

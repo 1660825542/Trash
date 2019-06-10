@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="div1">我是div元素的值</div>
+    <p id="p1">我是p元素的值</p>
+
+   <script type="text/javascript">
+        var domObj=document.getElementById("div1");
+        // alert(domObj);
+        var pObj=document.getElementById("p1");
+        // alert(pObj);
+       pObj.innerHTML="我是通过dom设置的值";
+   </script>
+</body>
+</html>

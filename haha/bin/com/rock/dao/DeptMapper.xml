@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rock.dao.DeptDao">
+	<select id="queryById" resultType="Dept">
+		select * from dept where deptno=#{deptno}
+	</select>
+	<!-- 
+		1:N的联级操作 （一个部门对应多个员工）
+		①、在1的那一端（部门）的pojo中添加一个持有多那一端类型的集合List
+		②、在1的那一端的映射文件中通过<collection>元素知名这个List中的数据来源（通过select属性指定）
+		collection元素：
+		property：在1那一端中的基本对象名
+		ofType:指定这个集合持有什么类型
+		column：关联列
+		select:指明获取多一段信息的select
+	 -->
+	<resultMap type="Dept" id="DeptBaseColumnWithEmployees">
+		<id column="deptno" property="deptno"/>
+		<result column="dname" property="dname"/>
+		<result column="loc" property="loc"/>
+		<collection property="emps" ofType="com.rock.pojo.Employee" column="deptno" select="selectDept2Employee">
+		</collection>
+	</resultMap>
+	
+	<select id="selectDept2Employee" resultType="Employee">
+		select * from emp where deptno=#{deptno}
+	</select>
+	
+	
+	<select id="queryByIdWithEmployees" resultMap="DeptBaseColumnWithEmployees">
+		select * from dept where deptno=#{deptno}
+	</select>
+</mapper>

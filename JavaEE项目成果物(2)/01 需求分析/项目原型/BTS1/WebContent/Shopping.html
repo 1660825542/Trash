@@ -1,0 +1,255 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cherish珍爱鲜花系列99枝戴安娜粉玫瑰+栀子叶_适合友情鲜花_周年纪念_道歉鲜花_祝贺鲜花_婚庆鲜花_生日鲜花_爱情鲜花_BTS网</title>
+	<style type="text/css">
+body {
+
+	background-repeat: repeat;
+	background-size: 100%;
+}
+
+#pay {
+	position: relative;
+	width: 150px;
+	height: 50px;
+	left: 620px;
+	top: 15px;
+	font-size: 30px;
+}
+
+#continue {
+	position: relative;
+	width: 150px;
+	height: 50px;
+	left: 200px;
+	top: 15px;
+	font-size: 30px;
+}
+</style>
+	
+	<meta name="keywords" content="爱情 玫瑰 鲜花 永远" />
+	<meta name="description" content="Cherish珍爱鲜花系列99枝戴安娜粉玫瑰+栀子叶，精选白底黑边纸包装，精美白色缎带花结，花语为：执子之手，非常适合友情鲜花、周年纪念、道歉鲜花、祝贺鲜花、婚庆鲜花、生日鲜花、爱情鲜花、等。BTS网, 视口碑为生命，以感恩心态服务每一位客户，百株BTS只取一朵精华！" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>	
+	<script type="text/javascript" src="js/jquery.lazyload.min.js"></script>
+
+	<script type="text/javascript" src="js/jquery.showDialog.js"></script>
+	<link href="//www.haohua.com/theme/haohua.com/default/static/css/showDialog.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="js/app.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">app.uri='';app.root='//www.BTSgifts.com';</script>
+</head>
+<body>
+		<div class="topper">
+		<div class="wrap">
+			<div class="left">
+				<a onclick="app.tools.addFavorite();" href="javascript:;" title="收藏BTS网 (BTSgifts.com)">收藏BTS网 (BTSgifts.com)</a>
+				<a href="javascript:;">
+					关注微信
+					<div class="topperpop">
+						<div class="fqrcode">
+							<p class="note">回复“礼物”有惊喜！" 活动多多，在BTS遇见幸福</p>
+							<p class="img"><img src="img/qrcode.png" width="128" height="130" /></p>
+							<p class="gzh">公众号</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="right">
+				<a class="iconbounce login" href="Mine.jsp" onclick="login();"
+					title="个人中心"><i class="icon icon-login"></i>个人中心</a> <a
+					class="iconbounce" href="${pageContext.request.contextPath }/ShowOrder_Servlet?now_page=1" title="我的好花"><i
+					class="icon icon-my"></i>我的好花</a> <a class="iconbounce"
+					href="service.jsp" onclick="openChat();" title="联系客服"><i
+					class="icon icon-service"></i>联系客服</a> <a class="iconbounce cart2"
+					href="ShowShopping_Servlet" title="购物车"><i
+					class="icon icon-cart"></i>购物车</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="header2brt">
+		<div class="wrap header ">
+			<div class="logobanner clearfix">
+				<div class="logo">
+					<a href="Goods_Servlet" title="【BTS网】专注鲜花电商，只做品质鲜花！"><img src="img/logo.png" width="248" height="41" alt="BTS网" /></a>
+				</div>
+				
+				
+				
+			</div>
+</div>
+	</div>
+
+	
+	
+<script type="text/javascript" src="//www.haohua.com/theme/haohua.com/default/static/js/jquery.jqzoom.js"></script>
+	<link href="//www.haohua.com/theme/haohua.com/default/static/css/jqzoom.css" rel="stylesheet" type="text/css" />
+	
+		<table width="1550" height="60" border="0" >
+		
+	</table>
+	<%
+		double num = 0;
+	%>
+	<table  align="center">
+		<tr>
+			<td width="300" height="20">图片</td>
+			<td width="150" height="20">商品名稱</td>
+			<td width="150">價格</td>
+			<td width="150">數量</td>
+			<td width="150">合计</td>
+			<td>删除商品</td>
+		</tr>
+		<c:set var="sum" value="0"></c:set>
+		<c:forEach items="${result}" var="shop">
+			<tr>
+				<td width="200" height="200"><img
+					src="${shop.getGoods().getImage()}"
+					style="width: 200px; height: 200px;" /></td>
+				<td width="150" height="15">${shop.getGoods().getName()}</td>
+				<td width="150">${shop.getGoods().getPrice()}</td>
+				<td width="150">${shop.getNumber()}</td>
+				<td width="150">${ shop.getNumber()*shop.getGoods().getPrice()}</td>
+				<td width="150"><a
+					href="${pageContext.request.contextPath }/DeleteShopping_Servlet?id=${shop.id }"><input
+						type="submit" value="删除商品" style="width: 150px; height: 50px;" /></a>
+			</tr>
+			<c:set var="sum"
+				value="${sum+shop.getNumber()*shop.getGoods().getPrice() }"></c:set>
+		</c:forEach>
+		<tr>
+			<td width="250">总金额：${sum`0 }</td>
+			<td><div id="pay" valign="middle">
+					<a href="SaveOrder_Servlet"><input type="submit" value="结账"
+						style="width: 150px; height: 50px;" /></a>
+				</div></td>
+			<td><div id="continue">
+				<a href="Goods_Servlet"><input type="submit" value="继续购物"
+					style="width: 150px; height: 50px;" /></a>
+			</div></td>
+		</tr>
+	</table>				
+		
+		
+		
+	
+	
+
+		<div class="footer">
+		<div class="wrap fservice">
+			<ul class="clearfix">
+				<li><span><i class="icon icon-fs1"></i><a href="#" target="_blank">销量领先</a></span></li>
+				<li><span><i class="icon icon-fs2"></i><a href="#" target="_blank">百万客户信赖</a></span></li>
+				<li><span><i class="icon icon-fs3"></i><a href="#" target="_blank">时尚原创花艺</a></span></li>
+				<li><span><i class="icon icon-fs4"></i><a href="#" target="_blank">订单实拍</a></span></li>
+				<li><span><i class="icon icon-fs5"></i><a href="#" target="_blank">低价保障</a></span></li>
+				<li><span><i class="icon icon-fs6"></i><a href="#" target="_blank">3小时配送</a></span></li>
+				<li><span><i class="icon icon-fs7"></i><a href="#" target="_blank">200% 退赔承诺</a></span></li>
+			</ul>
+		</div>
+		<div class="wrap fbody">
+			<div class="h60"></div>
+			<div class="fkehu">
+				<h5>客户服务</h5>
+				<dl>
+					<dt>售后服务</dt>
+					<dd><a href="#" target="_blank">配送说明</a></dd> 
+					<dd><a href="#" target="_blank">配送范围</a></dd> 
+					<dd><a href="#" target="_blank">订单查询</a></dd> 
+					<dd><a href="#" target="_blank">取消订单</a></dd> 
+					<dd><a href="#" target="_blank">补交货款</a></dd> 
+				</dl>
+				<dl>
+					<dt>服务条款</dt>
+					<dd><a href="#" target="_blank">关于我们</a></dd> 
+					<dd><a href="#" target="_blank">隐私条款</a></dd> 
+					<dd><a href="#" target="_blank">安全条款</a></dd> 
+					<dd><a href="#" target="_blank">支付说明</a></dd>
+				</dl>
+				<dl class="w150">
+					<dt>热门咨询</dt>
+					<dd><a href="#" target="_blank">BTS网购物流程</a></dd> 
+					<dd><a href="#" target="_blank">能配送哪些城市？</a></dd> 
+					<dd><a href="#" target="_blank">售后服务是怎么样的？</a></dd> 
+					<dd><a href="#" target="_blank">提前多久预订鲜花？</a></dd>
+				</dl>
+				<div class="clear"></div>
+			</div>
+			<div class="ftongcheng">
+				<h5>同城鲜花</h5>
+				<ul class="clearfix">
+					
+					<li><a href="#" target="_blank">北京市鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">天津市鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">河北省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">山西省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">内蒙省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">辽宁省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">吉林省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">黑龙江鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">上海市鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">江苏省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">浙江省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">安徽省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">福建省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">江西省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">山东省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">河南省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">湖北省鲜花</a></li> 
+					
+					<li><a href="#" target="_blank">更多城市</a></li>
+				</ul>
+			</div>
+			<div class="flianxi">
+				<h5>联系我们</h5>
+				<p class="hotline">全国订购热线:<span>400-888-9411</span></p>
+				<div class="cservice"><a href="javascript:;" onclick="openChat();"><img src="//www.haohua.com/theme/haohua.com/default/static/img/cservice.png" width="114" height="33" /></a></div>
+				<p class="worktime">客服工作时间：8:30-21:00</p><br>
+				<p class="worktime">售后服务电话：13378216662</p>
+			</div>
+			<div class="fqrcode">
+				<p class="note">回复“礼物”有惊喜！" 活动多多，在BTS遇见幸福</p>
+				<p class="img"><img src="img/qrcode.png" width="128" height="130" /></p>
+				<p class="gzh">公众号</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!---->
+		<script type="text/javascript" src="//www.haohua.com/theme/haohua.com/default/static/js/mobile.js"></script>
+		<div class="wrap fcopyright">
+			<p class="note">辽宁科技大学BTS科技有限公司软件16-1班 王浩 赵雨 荣誉出品 </p>
+			<ul class="clearfix">
+				<li class="img1"><a href="#" target="_blank" rel="nofollow">实名认证</a></li>
+				<li class="img2"><a href="#" target="_blank" rel="nofollow">官方验证</a></li>
+				<li class="img3"><a href="#" target="_blank" rel="nofollow">报警服务</a></li>
+			</ul>
+		</div>
+	</div>
+	
+</body>
+</html>

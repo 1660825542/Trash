@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#b1').click(function () {
+                // $('div').hide(1000);//带有一个毫秒的参数，指明当前动作的完成时间
+                // $('div').hide('slow');//带有一个flow|fast，指明动作的快慢
+
+                $('div').hide(2000,function () {//带有一个毫秒的参数，指明当前动作的完成时间.
+                    alert('回调方法开始执行');//回调方法
+                });
+            });
+            $('#b2').click(function () {
+                // $('div').show(3000);
+                $('div').show('fast');
+            });
+
+            $('#b3').click(function () {
+                $('div').toggle();//若div是隐藏的，那么toggle方法会show这些元素，若div元素是show，toggle会hide这个元素
+            });
+            $('#b4').click(function () {
+                $('div').hide();
+                $('div').fadeIn();//若div是隐藏的，那么toggle方法会show这些元素，若div元素是show，toggle会hide这个元素
+            });
+            $('#b5').click(function () {
+                $('div').fadeOut(2000);
+                $('div').fadeIn(1000);
+                // fadeto指明元素内容的透明度  数值越小越透明（越模糊）
+                $('div').fadeTo(1000,0.9);
+            });
+        });
+    </script>
+</head>
+<body>
+
+<fieldset>
+    <legend>jquery效果</legend>
+    <button id="b1">单击我（hide）</button>
+    <button id="b2">单击我（show）</button>
+    <button id="b3">单击我（toggle）</button>
+    <button id="b4">单击我（fadein）</button>
+    <button id="b5">单击我（fadeout）</button>
+    <div>我是div元素1</div>
+    <div id="div2">我是div元素2</div>
+    <div>我是div元素3</div>
+</fieldset>
+</body>
+</html>

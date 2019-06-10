@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PERMISSION" >
+  <resultMap id="BaseResultMap" type="Permission" >
+    <id column="PERM_ID" property="permId" jdbcType="DECIMAL" />
+    <result column="PERM_NAME" property="permName" jdbcType="VARCHAR" />
+    <result column="PERM_INFO" property="permInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectPermission" resultMap="BaseResultMap">
+      select * from permission
+  </select>
+  
+  <select id="selectPermissionById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from PERMISSION
+    where PERM_ID = #{permId,jdbcType=DECIMAL}
+  </select>
+  
+  <insert id="insertPermission" parameterType="Permission" >
+    insert into PERMISSION (PERM_ID, PERM_NAME, PERM_INFO
+      )
+    values (perm_seq.nextval, #{permName,jdbcType=VARCHAR}, #{permInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="getPermPrimaryKey" resultType="java.lang.Integer">
+  	select perm_seq.currval from dual    
+  </select>
+  
+  <update id="updatePermission" parameterType="Permission" >
+    update PERMISSION
+    set PERM_NAME = #{permName,jdbcType=VARCHAR},
+      PERM_INFO = #{permInfo,jdbcType=VARCHAR}
+    where PERM_ID = #{permId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+      select * from (select rownum rnum,p.* from permission p)
+		where
+		rnum between #{start} and #{end}
+  </select>
+  
+  <select id="countPerm" resultType="java.lang.Integer">
+      select count(*) from permission
+  </select>
+  
+  <select id="permissionIsToRole" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select p.*
+      from PERMISSION p,ROLE_PERMISSION rp
+      where p.perm_id=rp.perm_id and p.perm_id=#{permId}
+  </select>
+  
+  <!-- 查询某个角色有的权限 -->
+  <select id="roleHavePerm" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select p.*
+      from PERMISSION p,ROLE_PERMISSION rp, ROLE r
+	  where p.perm_id = rp.perm_id and r.role_id = rp.role_id and r.role_Id=#{roleId}
+  </select>
+  
+  <!-- 查询某个角色没有的权限 ，结合上一个一起使用-->
+  <select id="selectNotToRole" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select perm.* from(select p.*, rownum rnum
+      from PERMISSION p
+	<if test="list.size()>0">
+			 where p.perm_id not in
+		<foreach collection="list" index="i" item="perm" open="(" close=")" separator=",">
+			#{perm.permId}
+		</foreach>
+	</if>
+	) perm where rnum between #{start} and #{end}
+  </select>
+
+  <select id="countNotToRole" parameterType="java.util.List" resultType="java.lang.Integer">
+     select count(*)
+      from PERMISSION p
+	<if test="list.size()>0">
+			 where p.perm_id not in
+		<foreach collection="list" index="i" item="perm" open="(" close=")" separator=",">
+			#{perm.permId}
+		</foreach>
+	</if>
+  </select>
+  
+   <select id="queryPermByUsername" parameterType="java.lang.String" resultType="java.lang.String">
+	    select p.perm_name
+		from employee e
+		inner join emp_role er on e.emp_id=er.emp_id
+		inner join role r on er.role_id=r.role_id
+		inner join role_permission rp on r.role_id=rp.role_id
+		inner join permission p on p.perm_id=rp.perm_id
+		where e.emp_num=#{username}	    
+	</select>
+  
+</mapper>

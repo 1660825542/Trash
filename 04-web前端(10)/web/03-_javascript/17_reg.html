@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <input type="text" name="passwword" id="password">
+    <span id="info"></span>
+    <br/>
+    <button onclick="checkPassword();">测试密码是否是符合要求的</button>
+
+    <script type="text/javascript">
+        function checkPassword() {
+            // 密码要求是8-12位数字+字母的组合
+            // ①、获取用户输入的内容  在js中获取文本框中的值
+            var pwd=document.getElementById("password").value;
+            var reg=/^[0-9a-zA-Z]{8,12}$/;
+            if(!reg.test(pwd)){
+                // console.log("密码不合法");
+                document.getElementById("info").innerHTML="密码不合法，请输入8-12位数字+字母的组合";
+            }
+            else {
+                document.getElementById("info").innerHTML="恭喜合法了";
+            }
+        }
+    </script>
+</body>
+</html>

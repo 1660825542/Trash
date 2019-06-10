@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <!--表格标记  border:边框宽度
+        td和th的区别：
+        ①、th中的内容会加粗显示
+        ②、th中的内容会居中显示
+        align:设置表格居中而非内容居中
+            若align是td的属性的话，浏览器会将这个td中的内容居中显示
+    -->
+    <table border="1px" width="1200px" cellspacing="0px" align="center">
+        <!--tr:行-->
+        <tr  bgcolor="#ffd700">
+            <!--th:表头-->
+            <th>姓名</th>
+            <th>年龄</th>
+            <th bgcolor="purple">电话</th>
+            <th>性别</th>
+        </tr>
+        <tr>
+            <!--td：单元格-->
+            <td bgcolor="red">曹操</td>
+            <td>30</td>
+            <td>133333333</td>
+            <td rowspan="4" background="a3.jpg">男1</td>
+        </tr>
+        <tr>
+            <td>刘备</td>
+            <td>31</td>
+
+            <td align="center">14444444</td>
+        </tr>
+        <tr>
+            <td>孙策</td>
+            <td colspan="2">33</td>
+        </tr>
+        <tr  bgcolor="#ffd700">
+            <td>曹操</td>
+            <td>30</td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>

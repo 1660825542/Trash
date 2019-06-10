@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var as=new Array();
+        for(var i=0;i<10;i++){
+            as[i]="值"+(i+1);
+        }
+
+       for(var i=0;i<as.length;i++){
+            document.write(as[i]+"<br/>");
+       }
+       document.write("<hr/>");
+        // 在javascript中的for in遍历时，这个i是一个索引值而非具体值
+        for(i in as)
+            document.write(as[i]+"-----<br/>");
+        document.write("<hr/>");
+        var arr = new Array(3)
+        arr[0] = "George1"
+        arr[1] = "John1"
+        arr[2] = "Thomas1"
+
+        var arr2 = new Array(3)
+        arr2[0] = "James2"
+        arr2[1] = "Adrew2"
+        arr2[2] = "Martin2"
+        document.write(arr.concat(arr2));
+        document.write("<hr/>");
+        for(var i=0;i<arr.length;i++){
+            document.write(arr[i]+",");
+        }
+        for(var i=0;i<arr2.length;i++){
+            document.write(arr2[i]+",");
+        }
+
+        document.write("<hr/>");
+        var arr3=arr.concat(arr2);
+        for(var i=0;i<arr3.length;i++){
+            document.write(arr3[i]+",");
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

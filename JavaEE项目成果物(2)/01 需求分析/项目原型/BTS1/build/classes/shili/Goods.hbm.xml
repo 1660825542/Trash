@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+
+  <class name="shili.Goods" table="GOODS" >
+    <id name="id" type="long" column="ID">
+      <generator class="increment"/>
+    </id>
+
+    <property name="name" type="string" >
+        <column name="NAME" />
+    </property>
+    <property name="price" type="double" >
+        <column name="PRICE"  />
+        </property>
+    <property name="goods_number" type="string" >
+        <column name="GOODS_NUMBER"  />
+    </property>
+    <property name="image" type="string" >
+        <column name="IMAGE"  />
+    </property>
+    <set name="shopping" cascade="all" inverse="true">
+        <key column="GOODS_ID"/>
+        <one-to-many class="shili.Shopping"/>
+    </set> 
+    
+   </class>
+
+</hibernate-mapping>

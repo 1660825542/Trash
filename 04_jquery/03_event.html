@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var a=1;
+            
+            // 如下选择期匹配了所有的div元素  ready();
+            $("div").click(function () {
+                //这里就是配备出来的元素的单击事件的处理程序
+                console.log("单击了div元素"+(++a));
+                // 在jquery中获取div等元素的值是通过
+
+            });
+            $("button").click(function () {
+               //打印p元素的值到控制台
+               //  var value=$("p").html();//dom.innerHTML
+                var value=$("p").text();//dom.innerText
+                console.log(value);
+            });
+            $("div").mouseenter(function () {
+                console.log("-------------"+a++);
+            });
+            $("div").mouseleave(function () {
+                console.log("拜走啊 。。。。。。。");
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>单机我1</button>
+    <button>单机我2</button>
+    <div id="div1">我是div元素的值1</div>
+    <p>我是p元素的值</p>
+    <div>我是div元素的值2</div>
+</body>
+</html>

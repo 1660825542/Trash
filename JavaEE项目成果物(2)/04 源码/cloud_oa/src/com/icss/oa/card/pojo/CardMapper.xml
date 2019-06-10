@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CARD" >
+  <resultMap id="BaseResultMap" type="Card" >
+    <id column="CARD_ID" property="cardId" jdbcType="DECIMAL" />
+    <result column="CATA_ID" property="cataId" jdbcType="DECIMAL" />
+    <result column="CARD_NAME" property="cardName" jdbcType="VARCHAR" />
+    <result column="CARD_PHONE" property="cardPhone" jdbcType="VARCHAR" />
+    <result column="CARD_POSITION" property="cardPosition" jdbcType="VARCHAR" />
+    <result column="CARD_DEPT" property="cardDept" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <!--增加名片-->
+    <insert id="insert" parameterType="Card" >
+      insert into CARD (CARD_ID, CATA_ID, CARD_NAME, 
+      CARD_PHONE, CARD_POSITION, CARD_DEPT)
+      values (card_seq.nextval,
+      #{cataId,jdbcType=DECIMAL},
+      #{cardName,jdbcType=VARCHAR}, 
+      #{cardPhone,jdbcType=VARCHAR}, 
+      #{cardPosition,jdbcType=VARCHAR}, 
+      #{cardDept,jdbcType=VARCHAR}
+      )
+    </insert>
+    
+    <!-- 修改名片信息 -->
+    <update id="update" parameterType="Card" >
+      update CARD
+      set CARD_NAME = #{cardName,jdbcType=VARCHAR},
+      CARD_PHONE = #{cardPhone,jdbcType=VARCHAR},
+      CARD_POSITION = #{cardPosition,jdbcType=VARCHAR},
+      CARD_DEPT = #{cardDept,jdbcType=VARCHAR}
+      where CARD_ID = #{cardId,jdbcType=DECIMAL}
+    </update>
+    
+    <!-- 删除名片 -->
+    <delete id="delete" parameterType="java.lang.Integer" >
+   
+      delete from CARD
+      where CARD_ID = #{cardId,jdbcType=DECIMAL}
+    </delete>
+    
+    <select id="query"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+		select * from (select rownum
+		rnum,c.* from CARD c
+		left outer join card_category cate on cate.cata_id = c.cata_id
+		where cate.emp_id = #{empId}
+		) where rnum between #{start} and #{end}
+	</select>
+	
+    <select id="query1"  parameterType="Card" resultMap="BaseResultMap">
+		select * from (select rownum
+		rnum,c.* from CARD c) where rnum between #{start} and #{end}
+	</select>
+    
+    <!-- 条件搜索 -->
+	<select id="queryByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select * from (select rownum
+		rnum,c.* from card c
+		<where> 
+			<if test="cardName != null and cardName != ''">    
+				and card_name like '%'||#{cardName}||'%'
+			</if>
+		</where>
+		) where rnum between
+		#{start} and #{end}
+	</select>
+	
+    <select id="queryById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select * from CARD where CARD_ID=#{cardId,jdbcType=DECIMAL}
+	</select>
+	
+     
+     <!-- 通过页数查询 -->
+     <select id="queryByPager" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from (select rownum rnum,c.* from card c)
+		where
+		rnum between #{start} and #{end}
+     </select>
+     
+    <!-- 计数 -->
+    <select id="getCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+	    select count(*) from card where card.cata_id = #{cataId}
+	</select>
+	
+    <!-- 动态SQL：传入Array数组 -->
+	<select id="queryByInArray" resultMap="BaseResultMap">	    
+		select * from card				
+		<if test="array.length>0">	   
+			where card_id in			
+			<foreach collection="array" index="i" item="cardId" open="("
+				close=")" separator=",">
+				#{cardId}
+			</foreach>			
+		</if>		
+	</select>
+	
+	<!-- 获得当前的序列主键值 -->
+	<select id="getPrimaryKey" resultType="java.lang.Integer">
+	    select card_seq.currval from dual
+	</select>
+   
+	<!-- 查询名片内所属名片 -->
+	<select id="queryCatecard"  parameterType="java.util.Map" resultMap="BaseResultMap">
+   	     select *from card c
+         inner join card_category y
+		 on c.cata_id=y.cata_id
+		 where c.cata_id=#{cataId}	
+	</select>
+	
+	<select id="getConditionCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select
+		count(*)
+		from card
+		<where> 
+			<if test="cardName != null and cardName != ''">    
+				and card_name like '%'||#{cardName}||'%'
+			</if>
+		</where>
+	</select>
+   
+</mapper>

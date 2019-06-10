@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        span{
+            background-color: goldenrod;
+        }
+        .allClass{
+            background-color: #FF6500;
+            font-size: large;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-2.1.4.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#b1').click(function () {
+                console.log($('div').html());
+            });
+            // val()方法获取的是表单元素的值
+            $('#b2').click(function () {
+                console.log($('#userid').val());
+            });
+            // attr()方法获取的是表单元素的的某个属性值
+            $('#b3').click(function () {
+                console.log($('a').attr('href'));
+                $('a').attr("name",'test');//设置html元素的属性值
+            });
+
+            $('#b4').click(function () {
+                var value=$('#userid').val();
+                $('span').html(function (index,txt) {
+                    console.log(index+"-----"+txt);
+                    return "abc";
+                });
+            });
+            // 通过json向html元素添加多个属性
+            $('#b5').click(function () {
+               var attrs={
+                   'width':'500px',
+                   'height':'200px',
+                   'id':'div11111',
+                   'style':'background-color:red'
+               };
+               $('div').attr(attrs);
+               $('span').attr('name',function () {
+                   return 'abcdedf';
+               });
+
+            });
+
+            var a=2;
+            $('#b6').click(function () {
+                var li='<li>第'+(a++)+'章</li>';
+                $('ul').append(li);
+                // $('ul').prepend('<li>第'+(a++)+'章</li>');
+                // $('ul').after('<li>第'+(a++)+'章</li>');
+                // $('ul').before('<li>第'+(a++)+'章</li>');
+            });
+
+
+            $('#b7').click(function () {
+                // 把 匹配出来的所有元素remove掉
+                // $('li').remove();
+                $('ul').empty();
+            });
+
+
+            $('button').attr('name',function (index,old) {
+                return 'abc'+(index+1);
+            });
+            
+            $('#b8').click(function () {
+                // 向匹配的html元素添加class属性，属性值是参数（allClass）
+                // $('div,em,span,p').addClass('allClass');
+                $('div,em,span,p').toggleClass('allClass');//有删 无加
+            });
+            // 通过json向匹配元素添加css样式
+            $('#b9').click(function () {
+                $('div,em,span,p').css({
+                    'background-Color':'RED',
+                    'font-size':'30px',
+                    'width':'300px'
+                });
+            });
+
+            $('#b10').click(function () {
+                $('#div2').html('width:'+$('#div2').innerWidth()+'，height:'+$('#div2').innerHeight()+",DOCUMENT:"+$(document).width());
+            });
+        });
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>jquery效果</legend>
+        <div>我是div元素1</div>
+        <input type="text" name="userid" id="userid"/>
+        <a href="02_selector.html">跳转</a>
+        <span>原值值</span>
+        <hr/>
+            <p>我是p的值</p>
+            <div id="div2">我是div的值</div>
+            <em>我是em的值</em>
+            <span>我是span的值</span>
+        <hr/>
+        <button id="b1">单击我(html)</button>
+        <button id="b2">单击我(val)</button>
+        <button id="b3">单击我(attr)</button>
+        <button id="b4">单击我(callback)</button>
+        <button id="b5">单击我(attr_json)</button>
+        <button id="b6">单击我(append)</button>
+        <button id="b7">单击我(remove)</button>
+        <button id="b8">单击我(addClass)</button>
+        <button id="b9">单击我(css)</button>
+        <button id="b10">单击我(尺寸)</button>
+        <ul>
+            <li>第1章</li>
+        </ul>
+    </fieldset>
+</body>
+</html>

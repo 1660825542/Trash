@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        /*这里是css代码*/
+        /*①、元素选择器*/
+      /*  span{
+            background-color: yellow;
+        }*/
+        /*注意：html元素中可以添加id属性，id属性值具有排他性，基本所有的html元素都可以添加id属性*/
+        /*②、id选择器，通过#引导*/
+        /*如下代码匹配了id是d2的html元素*/
+        #d2{
+            background-color: yellow;
+        }
+        /*注意：html元素中可以添加class属性，注意这个属性没有排他性，多个html元素的class属性值可以重复，基本所有的html元素都有class属性*/
+        /*③、类选择类，通过.引导的*/
+        /*如下代码匹配了class属性值为de的所有html元素*/
+        .de{
+            background-color: goldenrod;
+        }
+        /*④、属性选择器*/
+        /*如下代码匹配了，具有href属性的所有html元素*/
+        [href='01-css.html']{
+            background-color: yellow;
+            color: black;
+        }
+        [name]{
+            background-color: gold;
+        }
+        b,h4,#d3,.de{
+            background-color: red;
+        }
+       /* *{
+            color: floralwhite;
+        }*/
+        /*⑤、后代选择器*/
+        /*通过空格  空格前是父元素，空格后是子元素*/
+        h1 em{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+    <hr/>
+    <h1>This is<span>a <em>important</em> head</span>ing1111</h1>
+    <p>This is a <em>important</em> paragraph.</p>
+    <h1>This is a <em>important</em> heading2222</h1>
+    <hr/>
+    <b>我是b元素的值</b>
+    <h4>我是h4元素的值</h4>
+    <hr/>
+    <div class="de">我是div元素值1</div>
+    <div id="d2">我是div元素值2</div>
+    <div id="d3">我是div元素值3</div>
+    <div class="de"> 我是div元素值4</div>
+    <span class="de">我是span元素的值</span>
+    <br/>
+    <a href="01-css.html">查看内容1</a> <br/>
+    <a href="02-selector.html">查看内容2</a> <br/>
+    <a name="partTest">我是没有href属性的连接，我是h4中锚</a>
+</body>
+</html>

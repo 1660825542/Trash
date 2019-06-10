@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 为了配置，为全类名起的简短操作名 -->
+	<typeAliases>
+		<typeAlias type="com.rock.pojo.Employee"  alias="Employee"/>
+		<typeAlias type="com.rock.pojo.Car" alias="Car"/>
+		<typeAlias type="com.rock.pojo.Person" alias="Person"/>
+		<typeAlias type="com.rock.pojo.Dept" alias="Dept"/>
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<!-- 配置事物管理方式，JDBC|MANAGED -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 配置数据源POOLED：链接池模式 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+				<property name="username" value="scott"/>
+				<property name="password" value="tiger"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 配置映射文件 -->
+	<mappers>
+		<mapper resource="com/rock/dao/EmployeeMapper.xml"/>
+		<mapper resource="com/rock/dao/CarMapper.xml"/>
+		<mapper resource="com/rock/dao/PersonMapper.xml"/>
+		<mapper resource="com/rock/dao/DeptMapper.xml"/>
+	</mappers>
+</configuration>

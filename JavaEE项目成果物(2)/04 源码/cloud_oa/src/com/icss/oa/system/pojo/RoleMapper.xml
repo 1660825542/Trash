@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ROLE" >
+  <resultMap id="BaseResultMap" type="Role" >
+    <id column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_INFO" property="roleInfo" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <insert id="insertRole" parameterType="Role" >
+    insert into ROLE (ROLE_ID, ROLE_NAME, ROLE_INFO
+      )
+    values (role_seq.nextval, #{roleName,jdbcType=VARCHAR}, #{roleInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="selectRole" resultMap="BaseResultMap">
+      select * from ROLE order by ROLE_ID asc
+  </select>
+  
+  <update id="updateRole" parameterType="Role">
+    update ROLE
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_INFO = #{roleInfo,jdbcType=VARCHAR}
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </update>
+  
+  <delete id="deleteRole" parameterType="java.lang.Integer" >
+    delete from ROLE
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </delete>
+  
+  
+  <select id="selectRoleById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from ROLE
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+      select * from (select rownum rnum,r.* from (select role.* from role order by role_id) r)
+		where
+		rnum between #{start} and #{end}
+  </select>
+  
+  <select id="getRolePrimaryKey" resultType="java.lang.Integer">
+  	select role_seq.currval from dual    
+  </select>
+  
+  <insert id="addPermission" parameterType="java.util.Map">
+      insert into ROLE_PERMISSION (RP_ID,ROLE_ID,PERM_ID)
+      values (rp_seq.nextval,#{roleId,jdbcType=DECIMAL},#{permId,jdbcType=DECIMAL})
+  </insert>
+  
+  <select id="roleIsToEmp" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select r.*
+      from ROLE r,EMP_ROLE er
+      where r.role_id=er.role_id and r.role_id=#{roleId}
+  </select>
+  
+  <select id="countRole" resultType="java.lang.Integer">
+      select count(*) from role
+  </select>
+
+   
+  <!-- 查询某个员工有的角色 -->
+  <select id="empHaveRole" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select r.*
+      from ROLE r,EMP_ROLE e_r, EMPLOYEE e
+	  where r.role_id = e_r.role_id and e_r.emp_id = e.emp_id and e.emp_Id=#{empId}
+  </select>
+  
+  <!-- 查询某个员工没有的角色，结合上一个一起使用-->
+  <select id="selectNotToEmp" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select r.*
+      from ROLE r
+	<if test="list.size()>0">
+			 where r.role_Id not in
+		<foreach collection="list" index="i" item="role" open="(" close=")" separator=",">
+			#{role.roleId}
+		</foreach>
+	</if>
+  </select>
+
+  <select id="countNotToEmp" parameterType="java.util.List" resultType="java.lang.Integer">
+     select count(*)
+      from ROLE r
+	<if test="list.size()>0">
+			 where r.role_id not in
+		<foreach collection="list" index="i" item="role" open="(" close=")" separator=",">
+			#{role.roleId}
+		</foreach>
+	</if>
+  </select>
+  
+    <select id="queryRoleByUsername" parameterType="java.lang.String" resultType="java.lang.String">
+        select r.role_name
+		from employee e
+		inner join emp_role er on e.emp_id=er.emp_id
+		inner join role r on er.role_id=r.role_id
+		where e.emp_num=#{username}        
+    </select>
+  
+</mapper>
